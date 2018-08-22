@@ -16,6 +16,7 @@ class SimpleRect extends Component {
 				y={100}
 				width={this.state.width}
 				height={100}
+				rotation={0.5}
 				tint={this.state.tint}
 				interactive={true}
 				pointertap={() => {

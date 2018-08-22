@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Stage } from "react-pixi-fiber";
 import SimpleRect from "./SimpleRect"
+import * as PIXI from "pixi.js"
 
-// PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST
+PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST
 
 class App extends Component {
   render() {
