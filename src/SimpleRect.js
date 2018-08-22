@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import { Texture } from 'pixi.js'
-import { Sprite } from "react-pixi-fiber";
+import { Sprite } from 'react-pixi-fiber'
+import { colors } from './vars'
 
 class SimpleRect extends Component {
 	state = {
