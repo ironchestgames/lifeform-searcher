@@ -19,7 +19,7 @@ class App extends Component {
         height={gameHeight * zoomScale}
         options={{ backgroundColor: colors.bg }}>
         <Container scale={zoomScale}>
-          <OnButton x={3} y={3} width={50} />
+          <OnButton x={3} y={3} width={100} />
         </Container>
       </Stage>
     )

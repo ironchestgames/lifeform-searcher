@@ -4,37 +4,42 @@ import * as PIXI from 'pixi.js'
 
 import imgOn from './assets/images/onbutton_on.png'
 import imgOff from './assets/images/onbutton_off.png'
-import imgBar from './assets/images/onbutton_bar.png'
+import imgBarOn from './assets/images/onbutton_bar_on.png'
+import imgBarOff from './assets/images/onbutton_bar_off.png'
 
 class OnButton extends Component {
 	state = {
 		isOn: false,
-		image: imgOff,
+		buttonImage: imgOff,
+		barImage: imgBarOff,
 	}
 
 	render() {
 		return (
-			<Container x={this.props.x} y={this.props.y}>
+			<Container
+				x={this.props.x}
+				y={this.props.y}
+				interactive={true}
+				pointertap={() => {
+					this.setState(function (prevState) {
+						const nextState = {
+							isOn: !prevState.isOn,
+							buttonImage: imgOn,
+							barImage: imgBarOn,
+						}
+						if (nextState.isOn === false) {
+							nextState.buttonImage = imgOff
+							nextState.barImage = imgBarOff
+						}
+						return nextState
+					})
+				}} >
 				<Sprite
-					texture={PIXI.Texture.fromImage(imgBar)}
+					texture={PIXI.Texture.fromImage(this.state.barImage)}
 					width={this.props.width}
-					visible={this.state.isOn}
 					/>
 				<Sprite
-					texture={PIXI.Texture.fromImage(this.state.image)}
-					interactive={true}
-					pointertap={() => {
-						this.setState(function (prevState) {
-							const nextState = {
-								isOn: !prevState.isOn,
-								image: imgOn
-							}
-							if (nextState.isOn === false) {
-								nextState.image = imgOff
-							}
-							return nextState
-						})
-					}}
+					texture={PIXI.Texture.fromImage(this.state.buttonImage)}
 					/>
 			</Container>
 		)
