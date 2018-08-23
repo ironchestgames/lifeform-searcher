@@ -1,11 +1,18 @@
 import React, { Component } from 'react'
-import { Sprite, Container } from 'react-pixi-fiber'
+import PropTypes from 'prop-types'
+import { Sprite, Container, BitmapText } from 'react-pixi-fiber'
 import * as PIXI from 'pixi.js'
 
 import imgOn from './assets/images/onbutton_on.png'
 import imgOff from './assets/images/onbutton_off.png'
 import imgBarOn from './assets/images/onbutton_bar_on.png'
 import imgBarOff from './assets/images/onbutton_bar_off.png'
+// import fontIronchestCapitalPxFNT from './assets/fonts/ironchest-capitalpx.fnt'
+// import fontIronchestCapitalPxPNG from './assets/fonts/ironchest-capitalpx.png'
+
+// PIXI.extras.BitmapText.registerFont(
+// 		fontIronchestCapitalPxFNT,
+// 		PIXI.Texture.fromImage(fontIronchestCapitalPxPNG))
 
 class OnButton extends Component {
 	state = {
@@ -14,7 +21,12 @@ class OnButton extends Component {
 		barImage: imgBarOff,
 	}
 
+	componentDidMount() {
+    console.log(this.context.app.loader)
+  }
+
 	render() {
+		console.log(BitmapText.fonts)
 		return (
 			<Container
 				x={this.props.x}
@@ -41,9 +53,21 @@ class OnButton extends Component {
 				<Sprite
 					texture={PIXI.Texture.fromImage(this.state.buttonImage)}
 					/>
+				<BitmapText
+					x={10}
+					y={10}
+					text={'HEJ hej'}
+					style={{font: { size: 16, name: 'ironchestcapital' }}}
+					/>
+
 			</Container>
 		)
 	}
+}
+
+
+OnButton.contextTypes = {
+  app: PropTypes.object,
 }
 
 export default OnButton
