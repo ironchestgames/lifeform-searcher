@@ -1,26 +1,33 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Container, Text } from 'react-pixi-fiber'
-import * as PIXI from 'pixi.js'
+import { Container } from 'react-pixi-fiber'
 
 class Loading extends Component {
 
 	componentDidMount() {
-		console.log('LOADING...')
-    const loader = this.context.app.loader
-    loader.add('./assets/fonts/ironchest-capitalpx.fnt')
-    loader.add('./assets/fonts/ironchest-capitalpx.png')
-    loader.load((loader, resources) => {
-    	console.log('LOADER DONE')
-    	console.log(resources)
-    	console.log(PIXI.BitmapText.fonts)
-    	this.props.onComplete()
-    })
-  }
+		const loader = this.context.app.loader
+
+		// NOTE: load bitmap font like this, webpack messes it up
+		const fntPath = process.env.PUBLIC_URL + '/ironchestcapitalpx.fnt'
+		const pngPath = process.env.PUBLIC_URL + '/ironchestcapitalpx.png'
+
+		loader
+		.add(pngPath)
+		.add(fntPath)
+
+		loader.onError.add(function (error, loader, resource) {
+			console.log('error', error)
+		})
+
+		loader.load((loader, resources) => {
+			this.props.onComplete()
+		})
+	}
 
 	render() {
 		return (
 			<Container>
+				{/* TODO: show loading progress */}
 			</Container>
 		)
 	}
@@ -28,7 +35,7 @@ class Loading extends Component {
 
 
 Loading.contextTypes = {
-  app: PropTypes.object,
+	app: PropTypes.object,
 }
 
 export default Loading
