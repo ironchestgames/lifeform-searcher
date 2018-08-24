@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Stage, Container, withPixiApp } from 'react-pixi-fiber'
+import { Stage, Container } from 'react-pixi-fiber'
 import Loading from './Loading'
 import Game from './Game'
 import * as PIXI from 'pixi.js'
@@ -19,7 +18,6 @@ class App extends Component {
   }
 
   onLoadingComplete() {
-    console.log('Loader is complete')
     this.setState(function () {
       return {
         isLoadingDone: true
