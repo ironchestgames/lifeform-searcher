@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Container, Sprite } from 'react-pixi-fiber'
-import * as PIXI from 'pixi.js'
-import StatusBar from './StatusBar'
+import { Container } from 'react-pixi-fiber'
 import FrameArea from './FrameArea'
+import StatusBar from './StatusBar'
+import FrequencyTuner from './FrequencyTuner'
 import { colors } from './vars'
 
 class Game extends Component {
@@ -16,6 +16,7 @@ class Game extends Component {
           height={94}
           />
         <StatusBar x={3} y={3} width={80} statusText={'RUNNING'} />
+        <FrequencyTuner x={3} y={59} />
       </Container>
     )
   }
