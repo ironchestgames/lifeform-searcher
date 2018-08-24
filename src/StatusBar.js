@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Sprite, Container, BitmapText } from 'react-pixi-fiber'
 import * as PIXI from 'pixi.js'
+import { Sprite, Container, BitmapText } from 'react-pixi-fiber'
+import FrameArea from './FrameArea'
 import { colors } from './vars'
 
 import imgOn from './assets/images/onbutton_on.png'
@@ -23,9 +24,8 @@ class StatusBar extends Component {
 						isOn: !prevState.isOn,
 					}))
 				}}>
-				<Sprite
-					texture={PIXI.Texture.WHITE}
-					tint={this.state.isOn ? colors.frames : colors.bg}
+				<FrameArea
+					color={this.state.isOn ? colors.frames : colors.bg}
 					height={7}
 					width={this.props.width}
 					/>
