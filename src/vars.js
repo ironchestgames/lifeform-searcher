@@ -6,6 +6,7 @@ const colors = {
 	interactive: 0x5fcde4,
 	error_bg: 0xac3232,
 	error_fg: 0xd95763,
+	page_bg: 0x141226, // NOTE: only used on html page
 }
 
 const zoomScale = 4

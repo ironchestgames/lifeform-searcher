@@ -7,7 +7,7 @@ class Loading extends Component {
 	componentDidMount() {
 		const loader = this.context.app.loader
 
-		// NOTE: load bitmap font like this, webpack messes it up
+		// NOTE: load bitmap font like this (webpack messes it up otherwise)
 		const fntPath = process.env.PUBLIC_URL + '/ironchestcapitalpx.fnt'
 		const pngPath = process.env.PUBLIC_URL + '/ironchestcapitalpx.png'
 
