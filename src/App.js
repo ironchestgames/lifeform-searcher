@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Stage, Container } from 'react-pixi-fiber'
 import Loading from './Loading'
-import StatusBar from './StatusBar'
+import Game from './Game'
 import * as PIXI from 'pixi.js'
 import {
   colors,
@@ -34,7 +34,7 @@ class App extends Component {
         options={{ backgroundColor: colors.bg }}>
         <Container scale={zoomScale}>
           { this.state.isLoadingDone ?
-            <StatusBar x={3} y={3} width={100} statusText={'RUNNING'} /> :
+            <Game /> :
             <Loading onComplete={this.onLoadingComplete.bind(this)} />
           }
         </Container>
