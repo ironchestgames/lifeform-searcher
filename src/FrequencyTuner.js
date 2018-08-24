@@ -17,6 +17,7 @@ import frqBarImg9 from './assets/images/frq_bar_9.png'
 const frqBarImgs = [
 	frqBarImg1,
 	frqBarImg1,
+	frqBarImg1,
 	frqBarImg2,
 	frqBarImg3,
 	frqBarImg4,
@@ -73,10 +74,10 @@ class FrequencyTuner extends Component {
 					/>
 				<Sprite
 					texture={PIXI.Texture.EMPTY}
-					x={0}
-					y={0}
-					width={44}
-					height={10}
+					x={1}
+					y={1}
+					width={38}
+					height={8}
 					interactive={true}
 					pointerdown={(event) => {
 						this.setState({
