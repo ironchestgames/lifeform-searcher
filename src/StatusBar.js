@@ -55,7 +55,6 @@ class StatusBar extends Component {
 	}
 }
 
-
 StatusBar.contextTypes = {
   app: PropTypes.object,
 }
