@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Sprite } from 'react-pixi-fiber'
 import * as PIXI from 'pixi.js'
+import clamp from 'clamp'
 import FrameArea from './FrameArea'
 import { colors } from './vars'
 
@@ -28,6 +29,12 @@ const frqBarImgs = [
 	frqBarImg9,
 ]
 
+const FRAME_BORDER_WIDTH = 1
+const FRAME_WIDTH = 44
+const INPUT_WIDTH = FRAME_WIDTH - FRAME_BORDER_WIDTH * 2
+const HANDLE_WIDTH = 4
+const HANDLE_X_MAX = FRAME_BORDER_WIDTH + INPUT_WIDTH - HANDLE_WIDTH / 2
+
 class FrequencyTuner extends Component {
 	state = {
 		frequency: 0,
@@ -46,7 +53,7 @@ class FrequencyTuner extends Component {
 				<FrameArea
 					color={colors.bg}
 					frameColor={colors.frames}
-					width={44}
+					width={FRAME_WIDTH}
 					height={10}
 					/>
 				{
@@ -67,16 +74,16 @@ class FrequencyTuner extends Component {
 				<FrameArea
 					color={colors.interactive}
 					frameColor={colors.active}
-					x={1 + Math.round(this.state.frequency * 38)}
+					x={clamp(Math.round(this.state.frequency * INPUT_WIDTH - HANDLE_WIDTH / 2), FRAME_BORDER_WIDTH, HANDLE_X_MAX)}
 					y={1}
-					width={4}
+					width={HANDLE_WIDTH}
 					height={8}
 					/>
 				<Sprite
 					texture={PIXI.Texture.EMPTY}
 					x={1}
 					y={1}
-					width={38}
+					width={INPUT_WIDTH}
 					height={8}
 					interactive={true}
 					pointerdown={(event) => {
