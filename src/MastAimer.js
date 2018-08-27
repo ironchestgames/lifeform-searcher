@@ -182,14 +182,26 @@ const angleImgs = [
 class MastAimer extends Component {
 	state = {
 		isDragging: false,
-		currentAngle: 0,
+		mastAngle: 0,
 		aimingAngle: 0,
-		speed: 0.01 // NOTE: radians
+		breadth: Math.PI / 4,
+		speed: 0.02, // NOTE: radians
+		isChangingMastAngle: false,
+	}
+
+	componentDidMount() {
+		this.context.app.ticker.add(function (dt) {
+			this.updateCurrentAngle(dt)
+		}, this)
 	}
 
 	setAimingAngle(angle) {
+		if (angle < 0) {
+			angle += Math.PI * 2
+		}
 		this.setState({
 			aimingAngle: angle,
+			isChangingMastAngle: true,
 		})
 	}
 
@@ -197,23 +209,44 @@ class MastAimer extends Component {
 		return Math.atan2(y - 0.5, x - 0.5)
 	}
 
+	updateCurrentAngle(dt) {
+		if (this.state.isChangingMastAngle === true) {
+			this.state.mastAngle += this.state.speed
+
+			if (this.state.aimingAngle - this.state.mastAngle <= this.state.speed) {
+				this.isChangingMastAngle = false
+			}
+		}
+	}
+
 	render() {
 		let angleImgIndex = Math.round(
-				this.state.aimingAngle / (Math.PI * 2) * angleImgs.length
-				)
-		if (angleImgIndex < 0) {
-			angleImgIndex += angleImgs.length
-		}
+				this.state.aimingAngle / (Math.PI * 2) * (angleImgs.length - 1))
+
+		const aimRangeGraphics = new PIXI.Graphics()
+		aimRangeGraphics.clear()
+		aimRangeGraphics.beginFill(colors.bg)
+		aimRangeGraphics.drawRect(-2, -2, 1, 1)
+		aimRangeGraphics.beginFill(colors.active)
+		const rangeLimitLeftAngle = this.state.mastAngle - this.state.breadth / 2
+		const rangeLimitRightAngle = this.state.mastAngle + this.state.breadth / 2
+		aimRangeGraphics.drawPolygon([
+				15.5, 15.5,
+				15 + Math.cos(rangeLimitLeftAngle) * 15, 15 + Math.sin(rangeLimitLeftAngle) * 15,
+				15 + Math.cos(rangeLimitRightAngle) * 15, 15 + Math.sin(rangeLimitRightAngle) * 15
+				])
+		aimRangeGraphics.endFill()
+		const aimRangeTexture = aimRangeGraphics.generateCanvasTexture(PIXI.SCALE_MODES.NEAREST, 1)
+
 		return (
 			<Container
 				x={this.props.x}
-				y={this.props.y}
-				interactive={true}
-				pointertap={() => {
-					this.setState((prevState) => ({
-						
-					}))
-				}}>
+				y={this.props.y}>
+				<Sprite
+					texture={aimRangeTexture}
+					x={-2}
+					y={-2}
+					/>
 				<Sprite
 					texture={PIXI.Texture.from(angleImgs[angleImgIndex])}
 					x={0}
