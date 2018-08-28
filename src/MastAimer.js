@@ -51,7 +51,7 @@ class MastAimer extends Component {
 			} else {
 				let newAngle = this.state.mastAngle + this.props.speed
 				let isGoingRight = true
-				if (d < 0) {
+				if (angleDiff < 0) {
 					newAngle = this.state.mastAngle - this.props.speed
 					isGoingRight = false
 				}
