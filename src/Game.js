@@ -24,11 +24,11 @@ class Game extends Component {
 					/>
 				<StatusBar x={3} y={3} width={80} statusText={'RUNNING'} />
 				<MastAimer
-					x={51}
-					y={59}
+					x={52}
+					y={60}
 					speed={0.005}
 					isOn={true} />
-				<FrequencyTuner x={3} y={59} />
+				<FrequencyTuner x={3} y={60} />
 			</Container>
 		)
 	}

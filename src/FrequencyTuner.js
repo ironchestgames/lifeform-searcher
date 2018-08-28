@@ -3,6 +3,7 @@ import { Container, Sprite } from 'react-pixi-fiber'
 import * as PIXI from 'pixi.js'
 import clamp from 'clamp'
 import FrameArea from './FrameArea'
+import SignalIndicator from './SignalIndicator'
 import { colors } from './vars'
 
 import frqBarImg1 from './assets/images/frq_bar_1.png'
@@ -74,7 +75,7 @@ class FrequencyTuner extends Component {
 				<FrameArea
 					color={colors.interactive}
 					frameColor={colors.active}
-					x={clamp(Math.round(this.state.frequency * INPUT_WIDTH - HANDLE_WIDTH / 2), FRAME_BORDER_WIDTH, HANDLE_X_MAX)}
+					x={clamp(Math.round(this.state.frequency * INPUT_WIDTH - HANDLE_WIDTH / 2 - 1), FRAME_BORDER_WIDTH, HANDLE_X_MAX)}
 					y={1}
 					width={HANDLE_WIDTH}
 					height={8}
@@ -109,6 +110,7 @@ class FrequencyTuner extends Component {
 					}}
 					/>
 
+				<SignalIndicator x={43} y={0} signal={this.state.frequency /* TODO: change this to actual signal */} />
 			</Container>
 		)
 	}
