@@ -185,12 +185,10 @@ const angleImgs = [
 
 class MastAimer extends Component {
 	state = {
-		isOn: true,
 		isDragging: false,
 		mastAngle: 0,
 		aimingAngle: 0,
-		breadth: Math.PI / 4,
-		speed: 0.005, // NOTE: radians
+		breadth: Math.PI / 3,
 		isGoingRight: true,
 		isChangingMastAngle: false,
 	}
@@ -219,15 +217,15 @@ class MastAimer extends Component {
 		if (this.state.isChangingMastAngle === true && this.state.isDragging === false) {
 			const d = this.state.aimingAngle - this.state.mastAngle
 			const angleDiff = Math.atan2(Math.sin(d), Math.cos(d))
-			if (Math.abs(angleDiff) < this.state.speed) {
+			if (Math.abs(angleDiff) < this.props.speed) {
 				this.setState({
 					isChangingMastAngle: false
 				})
 			} else {
-				let newAngle = this.state.mastAngle + this.state.speed
+				let newAngle = this.state.mastAngle + this.props.speed
 				let isGoingRight = true
 				if (d < 0) {
-					newAngle = this.state.mastAngle - this.state.speed
+					newAngle = this.state.mastAngle - this.props.speed
 					isGoingRight = false
 				}
 				this.setState({
@@ -290,13 +288,13 @@ class MastAimer extends Component {
 					texture={PIXI.Texture.from(indicatorActiveImg)}
 					x={0}
 					y={27}
-					visible={this.state.isChangingMastAngle}
+					visible={this.props.isOn}
 					/>
 				<Sprite
 					texture={PIXI.Texture.from(indicatorActiveImg)}
 					x={27}
 					y={27}
-					visible={this.state.isOn}
+					visible={this.state.isChangingMastAngle && !this.state.isDragging}
 					/>
 				<Sprite
 					texture={PIXI.Texture.from(indicatorInteractiveImg)}
