@@ -10,6 +10,53 @@ import indicatorInteractiveImg from './assets/images/mastaimer_indicator_interac
 import arrowLeftImg from './assets/images/mastaimer_arrowleft_on.png'
 import arrowRightImg from './assets/images/mastaimer_arrowright_on.png'
 
+const aimingAngleFilter = new PIXI.Filter(null, `
+	varying vec2 vTextureCoord;
+	uniform sampler2D uSampler;
+
+	void main(void)
+	{
+		float r_interactive = 95.0 / 255.0;
+		float g_interactive = 205.0 / 255.0;
+		float b_interactive = 228.0 / 255.0;
+
+		vec4 pixel = texture2D(uSampler, vTextureCoord);
+
+		if (!(pixel.r == r_interactive && pixel.g == g_interactive && pixel.b == b_interactive)) {
+			pixel.r = 0.0; // NOTE: have to set more than just alpha
+			pixel.g = 0.0;
+			pixel.b = 0.0;
+			pixel.a = 0.0;
+		}
+		gl_FragColor = pixel;
+	}
+`)
+
+const aimRangeFilter = new PIXI.Filter(null, `
+	varying vec2 vTextureCoord;
+	uniform sampler2D uSampler;
+
+	void main(void)
+	{
+		float r_active = 91.0 / 255.0;
+		float g_active = 110.0 / 255.0;
+		float b_active = 225.0 / 255.0;
+
+		vec4 pixel = texture2D(uSampler, vTextureCoord);
+
+		if (!(pixel.r == r_active && pixel.g == g_active && pixel.b == b_active)) {
+			pixel.r = 0.0; // NOTE: have to set more than just alpha
+			pixel.g = 0.0;
+			pixel.b = 0.0;
+			pixel.a = 0.0;
+		}
+		gl_FragColor = pixel;
+	}
+`)
+
+const aimRangeGraphics = new PIXI.Graphics()
+const aimingAngleGraphics = new PIXI.Graphics()
+
 class MastAimer extends Component {
 	state = {
 		isDragging: false,
@@ -64,30 +111,7 @@ class MastAimer extends Component {
 	}
 
 	render() {
-		const aimRangeFilterCode = `
-		varying vec2 vTextureCoord;
-		uniform sampler2D uSampler;
-		
-		void main(void)
-		{
-			float r_active = 91.0 / 255.0;
-			float g_active = 110.0 / 255.0;
-			float b_active = 225.0 / 255.0;
-
-			vec4 pixel = texture2D(uSampler, vTextureCoord);
-
-			if (!(pixel.r == r_active && pixel.g == g_active && pixel.b == b_active)) {
-				pixel.r = 0.0; // NOTE: have to set more than just alpha 
-				pixel.g = 0.0;
-				pixel.b = 0.0;
-				pixel.a = 0.0;
-			}
-			gl_FragColor = pixel;
-		}`
-
-		const aimRangeFilter = new PIXI.Filter(null, aimRangeFilterCode)
-
-		const aimRangeGraphics = new PIXI.Graphics()
+		// aim range
 		aimRangeGraphics.clear()
 		aimRangeGraphics.beginFill(colors.bg)
 		aimRangeGraphics.drawRect(-2, -2, 1, 1)
@@ -101,47 +125,25 @@ class MastAimer extends Component {
 				15 + Math.cos(rangeLimitRightAngle) * 16.5, 15 + Math.sin(rangeLimitRightAngle) * 16.5
 				])
 		aimRangeGraphics.endFill()
+
 		const aimRangeTexture = aimRangeGraphics.generateCanvasTexture(PIXI.SCALE_MODES.NEAREST, 1)
 
 		// aiming angle line
-		const aimingAngleFilterCode = `
-		varying vec2 vTextureCoord;
-		uniform sampler2D uSampler;
-		
-		void main(void)
-		{
-			float r_interactive = 95.0 / 255.0;
-			float g_interactive = 205.0 / 255.0;
-			float b_interactive = 228.0 / 255.0;
-
-			vec4 pixel = texture2D(uSampler, vTextureCoord);
-
-			if (!(pixel.r == r_interactive && pixel.g == g_interactive && pixel.b == b_interactive)) {
-				pixel.r = 0.0; // NOTE: have to set more than just alpha 
-				pixel.g = 0.0;
-				pixel.b = 0.0;
-				pixel.a = 0.0;
-			}
-			gl_FragColor = pixel;
-		}`
-
-		const aimingAngleFilter = new PIXI.Filter(null, aimingAngleFilterCode)
-
-		// aiming angle line
-		const aimingAngleGraphics = new PIXI.Graphics()
 		aimingAngleGraphics.clear()
 		aimingAngleGraphics.beginFill(colors.bg)
 		aimingAngleGraphics.drawRect(-2, -2, 1, 1)
-		aimingAngleGraphics.lineStyle(1.1, colors.interactive)
+		aimingAngleGraphics.lineStyle(1.001, colors.interactive)
 		aimingAngleGraphics.moveTo(15.5, 15.5)
 		aimingAngleGraphics.lineTo(15 + Math.cos(this.state.aimingAngle) * 15, 15 + Math.sin(this.state.aimingAngle) * 15)
 		aimingAngleGraphics.endFill()
+
 		const aimingAngleTexture = aimingAngleGraphics.generateCanvasTexture(PIXI.SCALE_MODES.NEAREST, 1)
 
 		return (
 			<Container
 				x={this.props.x}
 				y={this.props.y}>
+
 				<Sprite
 					texture={aimRangeTexture}
 					x={-2}
@@ -154,11 +156,13 @@ class MastAimer extends Component {
 					y={-2}
 					filters={[aimingAngleFilter]}
 					/>
+
 				<Sprite
 					x={-16}
 					y={-16}
 					texture={PIXI.Texture.from(bgImg)}
 					/>
+
 				<Sprite
 					texture={PIXI.Texture.from(arrowLeftImg)}
 					x={0}
@@ -189,6 +193,7 @@ class MastAimer extends Component {
 					y={27}
 					visible={this.state.isDragging}
 					/>
+
 				<Sprite
 					texture={PIXI.Texture.EMPTY}
 					x={0}
