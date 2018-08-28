@@ -14,15 +14,17 @@ const aimingAngleFilter = new PIXI.Filter(null, `
 	varying vec2 vTextureCoord;
 	uniform sampler2D uSampler;
 
+	float r_interactive = 95.0 / 255.0;
+	float g_interactive = 205.0 / 255.0;
+	float b_interactive = 228.0 / 255.0;
+
 	void main(void)
 	{
-		float r_interactive = 95.0 / 255.0;
-		float g_interactive = 205.0 / 255.0;
-		float b_interactive = 228.0 / 255.0;
-
 		vec4 pixel = texture2D(uSampler, vTextureCoord);
 
-		if (!(pixel.r == r_interactive && pixel.g == g_interactive && pixel.b == b_interactive)) {
+		if (!(pixel.r == r_interactive &&
+				pixel.g == g_interactive &&
+				pixel.b == b_interactive)) {
 			pixel.r = 0.0; // NOTE: have to set more than just alpha
 			pixel.g = 0.0;
 			pixel.b = 0.0;
@@ -36,15 +38,17 @@ const aimRangeFilter = new PIXI.Filter(null, `
 	varying vec2 vTextureCoord;
 	uniform sampler2D uSampler;
 
+	float r_active = 91.0 / 255.0;
+	float g_active = 110.0 / 255.0;
+	float b_active = 225.0 / 255.0;
+
 	void main(void)
 	{
-		float r_active = 91.0 / 255.0;
-		float g_active = 110.0 / 255.0;
-		float b_active = 225.0 / 255.0;
-
 		vec4 pixel = texture2D(uSampler, vTextureCoord);
 
-		if (!(pixel.r == r_active && pixel.g == g_active && pixel.b == b_active)) {
+		if (!(pixel.r == r_active &&
+				pixel.g == g_active &&
+				pixel.b == b_active)) {
 			pixel.r = 0.0; // NOTE: have to set more than just alpha
 			pixel.g = 0.0;
 			pixel.b = 0.0;
