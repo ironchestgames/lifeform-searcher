@@ -30,7 +30,7 @@ class Game extends Component {
 					speed={0.005}
 					isOn={true} />
 				<FrequencyTuner x={3} y={60} />
-				<MastValueDisplay x={3} y={72} frequency={1212.303003} mastAngle={128.54353435} receptionProcent={0.5323} />
+				<MastValueDisplay x={3} y={72} frequency={0.5} mastAngle={Math.PI} receptionProcent={0} />
 			</Container>
 		)
 	}

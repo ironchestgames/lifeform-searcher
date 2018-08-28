@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { format } from 'd3-format'
 import { Container, BitmapText } from 'react-pixi-fiber'
-import { colors } from './vars'
+import { colors, fontOptions } from './vars'
 
 const frqAndDegNumberFormatter = format('.3f')
 const recNumberFormatter = format('.1f')
@@ -14,15 +14,15 @@ class MastValueDisplay extends Component {
 					x={0}
 					y={0}
 					text={'FRQ'}
-					style={{font: { size: 16, name: 'ironchestcapital' }}}
+					style={{font: fontOptions}}
 					tint={colors.frames}
 					/>
 				<BitmapText
 					x={46}
 					y={0}
 					anchor={[1, 0]}
-					text={frqAndDegNumberFormatter(this.props.frequency)}
-					style={{font: { size: 16, name: 'ironchestcapital' }}}
+					text={frqAndDegNumberFormatter(this.props.frequency * 8000)}
+					style={{font: fontOptions}}
 					align={'right'}
 					tint={colors.active}
 					/>
@@ -31,15 +31,15 @@ class MastValueDisplay extends Component {
 					x={0}
 					y={7}
 					text={'DEG'}
-					style={{font: { size: 16, name: 'ironchestcapital' }}}
+					style={{font: fontOptions}}
 					tint={colors.frames}
 					/>
 				<BitmapText
 					x={46}
 					y={7}
 					anchor={[1, 0]}
-					text={frqAndDegNumberFormatter(this.props.mastAngle)}
-					style={{font: { size: 16, name: 'ironchestcapital' }}}
+					text={frqAndDegNumberFormatter(this.props.mastAngle * 180 / Math.PI)}
+					style={{font: fontOptions}}
 					align={'right'}
 					tint={colors.active}
 					/>
@@ -48,7 +48,7 @@ class MastValueDisplay extends Component {
 					x={0}
 					y={14}
 					text={'REC             %'}
-					style={{font: { size: 16, name: 'ironchestcapital' }}}
+					style={{font: fontOptions}}
 					tint={colors.frames}
 					/>
 				<BitmapText
@@ -56,7 +56,7 @@ class MastValueDisplay extends Component {
 					y={14}
 					anchor={[1, 0]}
 					text={recNumberFormatter(this.props.receptionProcent * 100)}
-					style={{font: { size: 16, name: 'ironchestcapital' }}}
+					style={{font: fontOptions}}
 					align={'right'}
 					tint={colors.active}
 					/>
