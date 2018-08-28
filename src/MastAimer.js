@@ -7,6 +7,7 @@ import { colors } from './vars'
 
 import bgImg from './assets/images/mastaimer_bg.png'
 import indicatorActiveImg from './assets/images/mastaimer_indicator_active.png'
+import indicatorInteractiveImg from './assets/images/mastaimer_indicator_interactive.png'
 import arrowLeftImg from './assets/images/mastaimer_arrowleft_on.png'
 import arrowRightImg from './assets/images/mastaimer_arrowright_on.png'
 
@@ -184,11 +185,13 @@ const angleImgs = [
 
 class MastAimer extends Component {
 	state = {
+		isOn: true,
 		isDragging: false,
 		mastAngle: 0,
 		aimingAngle: 0,
 		breadth: Math.PI / 4,
-		speed: 0.02, // NOTE: radians
+		speed: 0.005, // NOTE: radians
+		isGoingRight: true,
 		isChangingMastAngle: false,
 	}
 
@@ -222,11 +225,14 @@ class MastAimer extends Component {
 				})
 			} else {
 				let newAngle = this.state.mastAngle + this.state.speed
+				let isGoingRight = true
 				if (d < 0) {
 					newAngle = this.state.mastAngle - this.state.speed
+					isGoingRight = false
 				}
 				this.setState({
 					mastAngle: newAngle,
+					isGoingRight: isGoingRight,
 				})
 			}
 		}
@@ -272,22 +278,28 @@ class MastAimer extends Component {
 					texture={PIXI.Texture.from(arrowLeftImg)}
 					x={0}
 					y={0}
-					visible={this.state.isChangingMastAngle && !this.state.isDragging && this.state.speed < 0}
+					visible={this.state.isChangingMastAngle && !this.state.isDragging && !this.state.isGoingRight}
 					/>
 				<Sprite
 					texture={PIXI.Texture.from(arrowRightImg)}
 					x={23}
 					y={0}
-					visible={this.state.isChangingMastAngle && !this.state.isDragging && this.state.speed > 0}
+					visible={this.state.isChangingMastAngle && !this.state.isDragging && this.state.isGoingRight}
 					/>
 				<Sprite
 					texture={PIXI.Texture.from(indicatorActiveImg)}
 					x={0}
 					y={27}
-					visible={this.state.isChangingMastAngle && !this.state.isDragging}
+					visible={this.state.isChangingMastAngle}
 					/>
 				<Sprite
 					texture={PIXI.Texture.from(indicatorActiveImg)}
+					x={27}
+					y={27}
+					visible={this.state.isOn}
+					/>
+				<Sprite
+					texture={PIXI.Texture.from(indicatorInteractiveImg)}
 					x={27}
 					y={27}
 					visible={this.state.isDragging}
