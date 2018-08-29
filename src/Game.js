@@ -32,6 +32,7 @@ class Game extends Component {
 					x={52}
 					y={60}
 					speedFactor={this.props.mastSpeedFactor}
+					isSpinning={this.props.mastIsSpinning}
 					/>
 				<FrequencyTuner x={3} y={60} />
 				<MastValueDisplay
@@ -41,7 +42,12 @@ class Game extends Component {
 					mastAngle={this.props.mastAngle}
 					receptionProcent={0}
 					/>
-				<MastButtonPanel x={63} y={23} speedValue={this.props.mastSpeedFactor} />
+				<MastButtonPanel
+					x={63}
+					y={23}
+					speedValue={this.props.mastSpeedFactor}
+					isSpinning={this.props.mastIsSpinning}
+					/>
 				<MastVideoDisplay x={3} y={12} />
 				<GameValueDisplay x={154} y={15} elapsedTime={1000000} />
 			</Container>
@@ -58,6 +64,7 @@ function mapStateToProps(state) {
 		mastFrequencyNumber: state.mastFrequencyNumber,
 		mastAngle: state.mastAngle,
 		mastSpeedFactor: state.mastSpeedFactor,
+		mastIsSpinning: state.mastIsSpinning,
 	}
 }
 

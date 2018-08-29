@@ -4,6 +4,7 @@ export const SET_MAST_FREQUENCY = 'SET_MAST_FREQUENCY'
 export const SET_MAST_ANGLE = 'SET_MAST_ANGLE'
 export const INC_MAST_SPEED = 'INC_MAST_SPEED'
 export const DEC_MAST_SPEED = 'DEC_MAST_SPEED'
+export const TOGGLE_MAST_SPINNING = 'TOGGLE_MAST_SPINNING'
 
 export const setMastFrequencyAction = function (frequency) { // NOTE: a value between 0.0 - 1.0
 	dispatch({
@@ -32,5 +33,11 @@ export const incMastSpeedAction = function () {
 export const decMastSpeedAction = function () {
 	dispatch({
 		type: DEC_MAST_SPEED,
+	})
+}
+
+export const toggleMastIsSpinningAction = function () {
+	dispatch({
+		type: TOGGLE_MAST_SPINNING,
 	})
 }

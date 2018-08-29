@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import { incMastSpeedAction, decMastSpeedAction } from './Actions'
 import { Container } from 'react-pixi-fiber'
 import Button from './Button'
 import SignalIndicator from './SignalIndicator'
+import {
+	incMastSpeedAction,
+	decMastSpeedAction,
+	toggleMastIsSpinningAction
+} from './Actions'
 
 class MastButtonPanel extends Component {
-	state = {
-		isSpinToggled: false,
-	}
-
 	render() {
 		return (
 			<Container x={this.props.x || 0} y={this.props.y || 0} >
@@ -53,11 +53,9 @@ class MastButtonPanel extends Component {
 					height={9}
 					text={'SPIN'}
 					textOffset={[2, 2]}
-					state={this.state.isSpinToggled ? Button.TOGGLED : Button.ENABLED}
+					state={this.props.isSpinning ? Button.TOGGLED : Button.ENABLED}
 					pointertap={(event) => {
-						this.setState({
-							isSpinToggled: !this.state.isSpinToggled,
-						})
+						toggleMastIsSpinningAction()
 					}}
 				/>
 			</Container>

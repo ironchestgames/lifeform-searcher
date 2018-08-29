@@ -9,6 +9,7 @@ const initalState = {
 	mastFrequencyNumber: 4000, 
 	mastAngle: 0,
 	mastSpeedFactor: mastSpeedFactorStep,
+	mastIsSpinning: false,
 }
 
 const reducer = function (state, action) {
@@ -37,6 +38,12 @@ const reducer = function (state, action) {
 			return {
 				...state,
 				mastSpeedFactor: clamp(state.mastSpeedFactor - mastSpeedFactorStep, 0.05, 1),
+			}
+
+		case actions.TOGGLE_MAST_SPINNING:
+			return {
+				...state,
+				mastIsSpinning: !state.mastIsSpinning,
 			}
 
 		default:

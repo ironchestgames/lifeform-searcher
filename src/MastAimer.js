@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { setMastAngleAction } from './Actions'
 import * as PIXI from 'pixi.js'
 import { Sprite, Container } from 'react-pixi-fiber'
 import { colors } from './vars'
+
+import {
+	setMastAngleAction
+} from './Actions'
 
 import bgImg from './assets/images/mastaimer_bg.png'
 import indicatorActiveImg from './assets/images/mastaimer_indicator_active.png'
@@ -72,13 +75,12 @@ class MastAimer extends Component {
 		breadth: Math.PI / 3,
 		isGoingRight: false,
 		isChangingMastAngle: false,
-		isSpinning: true,
 		mastSpeed: 0.008,
 	}
 
 	componentDidMount() {
 		this.context.app.ticker.add(function (dt) {
-			if (this.state.isSpinning && !this.state.isDragging) {
+			if (this.props.isSpinning && !this.state.isDragging) {
 				this.setState({
 					aimingAngle: this.state.mastAngle + this.state.mastSpeed * this.props.speedFactor * (
 							this.state.isGoingRight ? 1.1 : -1.1),
@@ -187,28 +189,28 @@ class MastAimer extends Component {
 					texture={PIXI.Texture.from(arrowLeftImg)}
 					x={0}
 					y={0}
-					visible={(this.state.isSpinning && !this.state.isGoingRight) ||
+					visible={(this.props.isSpinning && !this.state.isGoingRight) ||
 						 this.state.isChangingMastAngle && !this.state.isDragging && !this.state.isGoingRight}
 					/>
 				<Sprite
 					texture={PIXI.Texture.from(arrowLeftInteractiveImg)}
 					x={0}
 					y={0}
-					visible={this.state.isSpinning && !this.state.isGoingRight && this.state.isDragging}
+					visible={this.props.isSpinning && !this.state.isGoingRight && this.state.isDragging}
 					/>
 
 				<Sprite
 					texture={PIXI.Texture.from(arrowRightImg)}
 					x={23}
 					y={0}
-					visible={(this.state.isSpinning && this.state.isGoingRight) ||
+					visible={(this.props.isSpinning && this.state.isGoingRight) ||
 						 this.state.isChangingMastAngle && !this.state.isDragging && this.state.isGoingRight}
 					/>
 				<Sprite
 					texture={PIXI.Texture.from(arrowRightInteractiveImg)}
 					x={23}
 					y={0}
-					visible={this.state.isSpinning && this.state.isGoingRight && this.state.isDragging}
+					visible={this.props.isSpinning && this.state.isGoingRight && this.state.isDragging}
 					/>
 				<Sprite
 					texture={PIXI.Texture.from(indicatorActiveImg)}
@@ -220,7 +222,7 @@ class MastAimer extends Component {
 					texture={PIXI.Texture.from(indicatorActiveImg)}
 					x={27}
 					y={27}
-					visible={this.state.isSpinning || this.state.isChangingMastAngle && !this.state.isDragging}
+					visible={this.props.isSpinning || this.state.isChangingMastAngle && !this.state.isDragging}
 					/>
 				<Sprite
 					texture={PIXI.Texture.from(indicatorInteractiveImg)}
