@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Container } from 'react-pixi-fiber'
 import FrameArea from './FrameArea'
@@ -30,11 +31,17 @@ class Game extends Component {
 				<MastAimer
 					x={52}
 					y={60}
-					speed={0.005}
+					speedFactor={this.props.mastSpeedFactor}
 					/>
 				<FrequencyTuner x={3} y={60} />
-				<MastValueDisplay x={3} y={72} frequency={0.5} mastAngle={Math.PI} receptionProcent={0} />
-				<MastButtonPanel x={63} y={23} />
+				<MastValueDisplay
+					x={3}
+					y={72}
+					frequencyNumber={this.props.mastFrequencyNumber}
+					mastAngle={this.props.mastAngle}
+					receptionProcent={0}
+					/>
+				<MastButtonPanel x={63} y={23} speedValue={this.props.mastSpeedFactor} />
 				<MastVideoDisplay x={3} y={12} />
 				<GameValueDisplay x={154} y={15} elapsedTime={1000000} />
 			</Container>
@@ -46,4 +53,12 @@ Game.contextTypes = {
 	app: PropTypes.object,
 }
 
-export default Game
+function mapStateToProps(state) {
+	return {
+		mastFrequencyNumber: state.mastFrequencyNumber,
+		mastAngle: state.mastAngle,
+		mastSpeedFactor: state.mastSpeedFactor,
+	}
+}
+
+export default connect(mapStateToProps)(Game)

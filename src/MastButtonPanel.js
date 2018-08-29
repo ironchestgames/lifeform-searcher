@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
+import { incMastSpeedAction, decMastSpeedAction } from './Actions'
 import { Container } from 'react-pixi-fiber'
-import clamp from 'clamp'
 import Button from './Button'
 import SignalIndicator from './SignalIndicator'
 
 class MastButtonPanel extends Component {
 	state = {
 		isSpinToggled: false,
-		speedValue: 0.25,
-		speedValueStep: 0.25,
 	}
 
 	render() {
@@ -23,9 +21,7 @@ class MastButtonPanel extends Component {
 					textOffset={[2, 1]}
 					state={Button.ENABLED}
 					pointertap={(event) => {
-						this.setState({
-							speedValue: clamp(this.state.speedValue + this.state.speedValueStep, 0, 1),
-						})
+						incMastSpeedAction()
 					}}
 				/>
 				<Button
@@ -37,16 +33,14 @@ class MastButtonPanel extends Component {
 					textOffset={[2, 1]}
 					state={Button.ENABLED}
 					pointertap={(event) => {
-						this.setState({
-							speedValue: clamp(this.state.speedValue - this.state.speedValueStep, 0, 1),
-						})
+						decMastSpeedAction()
 					}}
 				/>
 
 				<SignalIndicator
 					x={0}
 					y={18}
-					signal={this.state.speedValue}
+					signal={this.props.speedValue}
 					width={20}
 					height={6}
 					orientation={SignalIndicator.HORIZONTAL}

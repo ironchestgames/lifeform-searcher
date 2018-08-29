@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { setMastAngleAction } from './Actions'
 import * as PIXI from 'pixi.js'
 import { Sprite, Container } from 'react-pixi-fiber'
 import { colors } from './vars'
@@ -72,13 +73,14 @@ class MastAimer extends Component {
 		isGoingRight: false,
 		isChangingMastAngle: false,
 		isSpinning: true,
+		mastSpeed: 0.1,
 	}
 
 	componentDidMount() {
 		this.context.app.ticker.add(function (dt) {
 			if (this.state.isSpinning && !this.state.isDragging) {
 				this.setState({
-					aimingAngle: this.state.mastAngle + this.props.speed * (
+					aimingAngle: this.state.mastAngle + this.state.mastSpeed * this.props.speedFactor * (
 							this.state.isGoingRight ? 1.1 : -1.1),
 					isChangingMastAngle: true,
 				})
@@ -104,10 +106,10 @@ class MastAimer extends Component {
 	updateCurrentAngle(dt) {
 		const d = this.state.aimingAngle - this.state.mastAngle
 		const angleDiff = Math.atan2(Math.sin(d), Math.cos(d))
-		let newAngle = this.state.mastAngle + this.props.speed
+		let newAngle = this.state.mastAngle + this.state.mastSpeed
 		let isGoingRight = true
 		if (angleDiff < 0) {
-			newAngle = this.state.mastAngle - this.props.speed
+			newAngle = this.state.mastAngle - this.state.mastSpeed
 			isGoingRight = false
 		}
 		this.setState({
@@ -115,7 +117,7 @@ class MastAimer extends Component {
 		})
 
 		if (this.state.isChangingMastAngle === true && this.state.isDragging === false) {
-			if (Math.abs(angleDiff) < this.props.speed) {
+			if (Math.abs(angleDiff) < this.state.mastSpeed) {
 				this.setState({
 					isChangingMastAngle: false
 				})
@@ -123,6 +125,7 @@ class MastAimer extends Component {
 				this.setState({
 					mastAngle: newAngle,
 				})
+				setMastAngleAction(newAngle) // TODO: maybe not like this?
 			}
 		}
 	}

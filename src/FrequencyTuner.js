@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { setMastFrequencyAction } from './Actions'
 import { Container, Sprite } from 'react-pixi-fiber'
 import * as PIXI from 'pixi.js'
 import clamp from 'clamp'
@@ -41,11 +42,8 @@ class FrequencyTuner extends Component {
 		isDragging: false,
 	}
 
-	setFrequency(frequency) {
-		this.props.dispatch({
-			type: 'SET_MAST_FREQUENCY',
-			value: frequency,
-		})
+	setMastFrequency(mastFrequency) {
+		setMastFrequencyAction(mastFrequency)
 	}
 
 	render() {
@@ -59,7 +57,7 @@ class FrequencyTuner extends Component {
 					/>
 				{
 					[...Array(14)].map(function (x, i) {
-						let imgIndex = Math.round(Math.abs(i - 12 * this.props.frequency))
+						let imgIndex = Math.round(Math.abs(i - 12 * this.props.mastFrequency))
 						if (imgIndex >= frqBarImgs.length) {
 							imgIndex = frqBarImgs.length - 1
 						}
@@ -74,7 +72,7 @@ class FrequencyTuner extends Component {
 				}
 				<FrameArea
 					color={colors.interactive}
-					x={clamp(Math.round(this.props.frequency * INPUT_WIDTH - HANDLE_WIDTH / 2 - 1), FRAME_BORDER_WIDTH, HANDLE_X_MAX)}
+					x={clamp(Math.round(this.props.mastFrequency * INPUT_WIDTH - HANDLE_WIDTH / 2 - 1), FRAME_BORDER_WIDTH, HANDLE_X_MAX)}
 					y={1}
 					width={HANDLE_WIDTH}
 					height={8}
@@ -90,7 +88,7 @@ class FrequencyTuner extends Component {
 						this.setState({
 							isDragging: true,
 						})
-						this.setFrequency(event.data.getLocalPosition(event.target).x)
+						this.setMastFrequency(event.data.getLocalPosition(event.target).x)
 					}}
 					pointerout={() => {
 						this.setState({
@@ -104,7 +102,7 @@ class FrequencyTuner extends Component {
 					}}
 					pointermove={(event) => {
 						if (this.state.isDragging) {
-							this.setFrequency(event.data.getLocalPosition(event.target).x)
+							this.setMastFrequency(event.data.getLocalPosition(event.target).x)
 						}
 					}}
 					/>
@@ -112,7 +110,7 @@ class FrequencyTuner extends Component {
 				<SignalIndicator
 					x={43}
 					y={0}
-					signal={this.props.frequency}
+					signal={this.props.mastFrequency /* TODO: change to signal value */}
 					width={4}
 					height={10}
 					orientation={SignalIndicator.VERTICAL}
@@ -124,7 +122,7 @@ class FrequencyTuner extends Component {
 
 function mapStateToProps(state) {
 	return {
-		frequency: state.mast_frequency,
+		mastFrequency: state.mastFrequency,
 	}
 }
 

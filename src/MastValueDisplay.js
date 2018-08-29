@@ -21,7 +21,7 @@ class MastValueDisplay extends Component {
 					x={46}
 					y={0}
 					anchor={[1, 0]}
-					text={frqAndDegNumberFormatter(this.props.frequency * 8000)}
+					text={frqAndDegNumberFormatter(this.props.frequencyNumber)}
 					style={{font: fontOptions}}
 					align={'right'}
 					tint={colors.active}
