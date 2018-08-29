@@ -110,7 +110,14 @@ class FrequencyTuner extends Component {
 					}}
 					/>
 
-				<SignalIndicator x={43} y={0} signal={this.state.frequency /* TODO: change this to actual signal */} />
+				<SignalIndicator
+					x={43}
+					y={0}
+					signal={this.state.frequency /* TODO: change this to actual signal */}
+					width={4}
+					height={10}
+					orientation={SignalIndicator.VERTICAL}
+					/>
 			</Container>
 		)
 	}
