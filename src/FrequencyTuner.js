@@ -19,7 +19,6 @@ import frqBarImg9 from './assets/images/frq_bar_9.png'
 const frqBarImgs = [
 	frqBarImg1,
 	frqBarImg1,
-	frqBarImg1,
 	frqBarImg2,
 	frqBarImg3,
 	frqBarImg4,
