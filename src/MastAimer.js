@@ -73,7 +73,7 @@ class MastAimer extends Component {
 		isGoingRight: false,
 		isChangingMastAngle: false,
 		isSpinning: true,
-		mastSpeed: 0.1,
+		mastSpeed: 0.008,
 	}
 
 	componentDidMount() {
@@ -106,10 +106,10 @@ class MastAimer extends Component {
 	updateCurrentAngle(dt) {
 		const d = this.state.aimingAngle - this.state.mastAngle
 		const angleDiff = Math.atan2(Math.sin(d), Math.cos(d))
-		let newAngle = this.state.mastAngle + this.state.mastSpeed
+		let newAngle = this.state.mastAngle + this.state.mastSpeed * this.props.speedFactor
 		let isGoingRight = true
 		if (angleDiff < 0) {
-			newAngle = this.state.mastAngle - this.state.mastSpeed
+			newAngle = this.state.mastAngle - this.state.mastSpeed * this.props.speedFactor
 			isGoingRight = false
 		}
 		this.setState({
@@ -117,7 +117,7 @@ class MastAimer extends Component {
 		})
 
 		if (this.state.isChangingMastAngle === true && this.state.isDragging === false) {
-			if (Math.abs(angleDiff) < this.state.mastSpeed) {
+			if (Math.abs(angleDiff) < this.state.mastSpeed * this.props.speedFactor) {
 				this.setState({
 					isChangingMastAngle: false
 				})

@@ -30,13 +30,13 @@ const reducer = function (state, action) {
 		case actions.INC_MAST_SPEED:
 			return {
 				...state,
-				mastSpeedFactor: clamp(state.mastSpeedFactor + mastSpeedFactorStep, 0, 1),
+				mastSpeedFactor: clamp(state.mastSpeedFactor + mastSpeedFactorStep, 0.05, 1),
 			}
 
 		case actions.DEC_MAST_SPEED:
 			return {
 				...state,
-				mastSpeedFactor: clamp(state.mastSpeedFactor - mastSpeedFactorStep, 0, 1),
+				mastSpeedFactor: clamp(state.mastSpeedFactor - mastSpeedFactorStep, 0.05, 1),
 			}
 
 		default:
