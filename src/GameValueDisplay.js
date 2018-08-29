@@ -6,7 +6,7 @@ import { colors, fontOptions } from './vars'
 
 function msToTimeFormatter(ms) {
 	var pad = (n, z = 2) => ('00' + n).slice(-z)
-	return pad((ms % 5940000) / 6000 | 0) + ':' + pad((ms % 6000) / 1000|0)
+	return pad((ms % 5940000) / 60000 | 0) + ':' + pad((ms % 60000) / 1000|0)
 }
 
 class GameValueDisplay extends Component {
@@ -44,7 +44,7 @@ class GameValueDisplay extends Component {
 					x={34}
 					y={19}
 					anchor={[1, 0]}
-					text={'19'}
+					text={this.props.lifeformsFoundCounter + ''}
 					style={{font: fontOptions}}
 					align={'right'}
 					tint={colors.active}

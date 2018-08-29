@@ -10,6 +10,9 @@ const initalState = {
 	mastAngle: 0,
 	mastSpeedFactor: mastSpeedFactorStep,
 	mastIsSpinning: false,
+
+	lifeformsFoundCounter: 0,
+	elapsedGameTime: 0, // ms
 }
 
 const reducer = function (state, action) {
@@ -44,6 +47,18 @@ const reducer = function (state, action) {
 			return {
 				...state,
 				mastIsSpinning: !state.mastIsSpinning,
+			}
+
+		case actions.INC_LIFEFORMS_FOUND:
+			return {
+				...state,
+				lifeformsFoundCounter: state.lifeformsFoundCounter + 1,
+			}
+
+		case actions.ADD_ELAPSED_TIME:
+			return {
+				...state,
+				elapsedGameTime: state.elapsedGameTime + action.payload.dt,
 			}
 
 		default:

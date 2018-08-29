@@ -10,12 +10,17 @@ import MastValueDisplay from './MastValueDisplay'
 import MastButtonPanel from './MastButtonPanel'
 import MastVideoDisplay from './MastVideoDisplay'
 import GameValueDisplay from './GameValueDisplay'
+import { addElapsedTimeAction } from './Actions'
 import { colors } from './vars'
 
 class Game extends Component {
 
 	componentDidMount() {
 		this.context.app.renderer.plugins.interaction.moveWhenInside = true
+
+		this.context.app.ticker.add(() => {
+			addElapsedTimeAction(this.context.app.ticker.elapsedMS)
+		})
 	}
 
 	render() {
@@ -49,7 +54,12 @@ class Game extends Component {
 					isSpinning={this.props.mastIsSpinning}
 					/>
 				<MastVideoDisplay x={3} y={12} />
-				<GameValueDisplay x={154} y={15} elapsedTime={1000000} />
+				<GameValueDisplay
+					x={154}
+					y={15}
+					elapsedTime={this.props.elapsedGameTime}
+					lifeformsFoundCounter={this.props.lifeformsFoundCounter}
+					/>
 			</Container>
 		)
 	}
@@ -65,6 +75,10 @@ function mapStateToProps(state) {
 		mastAngle: state.mastAngle,
 		mastSpeedFactor: state.mastSpeedFactor,
 		mastIsSpinning: state.mastIsSpinning,
+
+		lifeformsFoundCounter: state.lifeformsFoundCounter,
+
+		elapsedGameTime: state.elapsedGameTime,
 	}
 }
 
