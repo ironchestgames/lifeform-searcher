@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { Container, Sprite } from 'react-pixi-fiber'
-import * as PIXI from 'pixi.js'
+import { Container } from 'react-pixi-fiber'
 import clamp from 'clamp'
 import Button from './Button'
 import SignalIndicator from './SignalIndicator'
-import { colors } from './vars'
 
 class MastButtonPanel extends Component {
 	state = {

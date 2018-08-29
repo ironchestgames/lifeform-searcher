@@ -3,9 +3,8 @@ import PropTypes from 'prop-types'
 import { Container, Sprite } from 'react-pixi-fiber'
 import { CRTFilter } from 'pixi-filters'
 import * as PIXI from 'pixi.js'
-import clamp from 'clamp'
 import Button from './Button'
-import { colors, zoomScale } from './vars'
+import { zoomScale } from './vars'
 
 import videoFrameImg from './assets/images/video_display_frame.png'
 
