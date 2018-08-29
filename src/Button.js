@@ -3,30 +3,28 @@ import { Container, Sprite, BitmapText } from 'react-pixi-fiber'
 import * as PIXI from 'pixi.js'
 import { colors, fontOptions } from './vars'
 
-const BUTTON = { // NOTE: state constants
-	ENABLED: 'ENABLED', // NOTE: when it is clickable
-	DISABLED: 'DISABLED', // NOTE: when it's not clickable
-	DISABLED_NOFRAMES: 'DISABLED_NOFRAMES',
-	TOGGLED: 'TOGGLED', // NOTE: when it is toggled on and clickable
-}
+const ENABLED = 'ENABLED'
+const DISABLED = 'DISABLED'
+const DISABLED_NOFRAMES = 'DISABLED_NOFRAMES'
+const TOGGLED = 'TOGGLED'
 
 const activeColors = {
-	[BUTTON.ENABLED]: {
+	[ENABLED]: {
 		bg: colors.frames,
 		frame: colors.frames,
 		text: colors.interactive,
 	},
-	[BUTTON.DISABLED]: {
+	[DISABLED]: {
 		bg: colors.bg,
 		frame: colors.frames,
 		text: colors.frames,
 	},
-	[BUTTON.DISABLED_NOFRAMES]: {
+	[DISABLED_NOFRAMES]: {
 		bg: colors.frames,
 		frame: colors.frames,
 		text: colors.bg,
 	},
-	[BUTTON.TOGGLED]: {
+	[TOGGLED]: {
 		bg: colors.frames,
 		frame: colors.interactive,
 		text: colors.interactive,
@@ -34,7 +32,6 @@ const activeColors = {
 }
 
 class Button extends Component {
-
 	render() {
 		return (
 			<Container x={this.props.x || 0} y={this.props.y || 0}>
@@ -66,8 +63,8 @@ class Button extends Component {
 					height={this.props.height}
 					interactive={true}
 					pointertap={this.props.pointertap ? (event) => {
-						if (this.props.state === BUTTON.ENABLED ||
-								this.props.state === BUTTON.TOGGLED) {
+						if (this.props.state === ENABLED ||
+								this.props.state === TOGGLED) {
 							this.props.pointertap(event)
 						}
 					} : null}
@@ -77,5 +74,9 @@ class Button extends Component {
 	}
 }
 
+Button.ENABLED = ENABLED
+Button.DISABLED = DISABLED
+Button.DISABLED_NOFRAMES = DISABLED_NOFRAMES
+Button.TOGGLED = TOGGLED
+
 export default Button
-export { Button, BUTTON }
