@@ -59,7 +59,7 @@ class FrequencyTuner extends Component {
 					/>
 				{
 					[...Array(14)].map(function (x, i) {
-						let imgIndex = Math.round(Math.abs(i - 13 * this.state.frequency))
+						let imgIndex = Math.round(Math.abs(i - 12 * this.state.frequency))
 						if (imgIndex >= frqBarImgs.length) {
 							imgIndex = frqBarImgs.length - 1
 						}
@@ -74,7 +74,6 @@ class FrequencyTuner extends Component {
 				}
 				<FrameArea
 					color={colors.interactive}
-					frameColor={colors.active}
 					x={clamp(Math.round(this.state.frequency * INPUT_WIDTH - HANDLE_WIDTH / 2 - 1), FRAME_BORDER_WIDTH, HANDLE_X_MAX)}
 					y={1}
 					width={HANDLE_WIDTH}

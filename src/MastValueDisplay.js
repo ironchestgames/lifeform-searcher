@@ -47,7 +47,7 @@ class MastValueDisplay extends Component {
 				<BitmapText
 					x={0}
 					y={14}
-					text={'REC             %'}
+					text={'REC                         %'}
 					style={{font: fontOptions}}
 					tint={colors.frames}
 					/>
