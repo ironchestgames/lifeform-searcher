@@ -9,6 +9,8 @@ import indicatorActiveImg from './assets/images/mastaimer_indicator_active.png'
 import indicatorInteractiveImg from './assets/images/mastaimer_indicator_interactive.png'
 import arrowLeftImg from './assets/images/mastaimer_arrowleft_on.png'
 import arrowRightImg from './assets/images/mastaimer_arrowright_on.png'
+import arrowRightInteractiveImg from './assets/images/mastaimer_arrowright_interactive.png'
+import arrowLeftInteractiveImg from './assets/images/mastaimer_arrowleft_interactive.png'
 
 const aimingAngleFilter = new PIXI.Filter(null, `
 	varying vec2 vTextureCoord;
@@ -74,14 +76,14 @@ class MastAimer extends Component {
 
 	componentDidMount() {
 		this.context.app.ticker.add(function (dt) {
-			if (this.state.isSpinning) {
+			if (this.state.isSpinning && !this.state.isDragging) {
 				this.setState({
-					mastAngle: this.state.mastAngle + this.props.speed * (
-							this.state.isGoingRight ? 1 : -1),
+					aimingAngle: this.state.mastAngle + this.props.speed * (
+							this.state.isGoingRight ? 1.1 : -1.1),
+					isChangingMastAngle: true,
 				})
-			} else {
-				this.updateCurrentAngle(dt)
 			}
+			this.updateCurrentAngle(dt)
 		}, this)
 	}
 
@@ -100,23 +102,26 @@ class MastAimer extends Component {
 	}
 
 	updateCurrentAngle(dt) {
+		const d = this.state.aimingAngle - this.state.mastAngle
+		const angleDiff = Math.atan2(Math.sin(d), Math.cos(d))
+		let newAngle = this.state.mastAngle + this.props.speed
+		let isGoingRight = true
+		if (angleDiff < 0) {
+			newAngle = this.state.mastAngle - this.props.speed
+			isGoingRight = false
+		}
+		this.setState({
+			isGoingRight: isGoingRight,
+		})
+
 		if (this.state.isChangingMastAngle === true && this.state.isDragging === false) {
-			const d = this.state.aimingAngle - this.state.mastAngle
-			const angleDiff = Math.atan2(Math.sin(d), Math.cos(d))
 			if (Math.abs(angleDiff) < this.props.speed) {
 				this.setState({
 					isChangingMastAngle: false
 				})
 			} else {
-				let newAngle = this.state.mastAngle + this.props.speed
-				let isGoingRight = true
-				if (angleDiff < 0) {
-					newAngle = this.state.mastAngle - this.props.speed
-					isGoingRight = false
-				}
 				this.setState({
 					mastAngle: newAngle,
-					isGoingRight: isGoingRight,
 				})
 			}
 		}
@@ -183,11 +188,24 @@ class MastAimer extends Component {
 						 this.state.isChangingMastAngle && !this.state.isDragging && !this.state.isGoingRight}
 					/>
 				<Sprite
+					texture={PIXI.Texture.from(arrowLeftInteractiveImg)}
+					x={0}
+					y={0}
+					visible={this.state.isSpinning && !this.state.isGoingRight && this.state.isDragging}
+					/>
+
+				<Sprite
 					texture={PIXI.Texture.from(arrowRightImg)}
 					x={23}
 					y={0}
 					visible={(this.state.isSpinning && this.state.isGoingRight) ||
 						 this.state.isChangingMastAngle && !this.state.isDragging && this.state.isGoingRight}
+					/>
+				<Sprite
+					texture={PIXI.Texture.from(arrowRightInteractiveImg)}
+					x={23}
+					y={0}
+					visible={this.state.isSpinning && this.state.isGoingRight && this.state.isDragging}
 					/>
 				<Sprite
 					texture={PIXI.Texture.from(indicatorActiveImg)}
