@@ -29,7 +29,7 @@ class MastVideoDisplay extends Component {
 		this.context.app.ticker.add((dt) => {
 			crtFilter.time += 0.4 * dt
 
-			seedTime += 0.2 * dt
+			seedTime += 0.3 * dt
 			if (seedTime > 1) {
 				crtFilter.seed = Math.random()
 				seedTime = 0
