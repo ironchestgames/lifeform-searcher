@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Container, Sprite } from 'react-pixi-fiber'
 import * as PIXI from 'pixi.js'
 import clamp from 'clamp'
@@ -37,19 +38,19 @@ const HANDLE_X_MAX = FRAME_BORDER_WIDTH + INPUT_WIDTH - HANDLE_WIDTH / 2
 
 class FrequencyTuner extends Component {
 	state = {
-		frequency: 0,
 		isDragging: false,
 	}
 
 	setFrequency(frequency) {
-		this.setState({
-			frequency: frequency,
+		this.props.dispatch({
+			type: 'SET_MAST_FREQUENCY',
+			value: frequency,
 		})
 	}
 
 	render() {
 		return (
-			<Container x={this.props.x || 0} y={this.props.y || 0} >
+			<Container x={this.props.x || 0} y={this.props.y || 0}>
 				<FrameArea
 					color={colors.bg}
 					frameColor={colors.frames}
@@ -58,7 +59,7 @@ class FrequencyTuner extends Component {
 					/>
 				{
 					[...Array(14)].map(function (x, i) {
-						let imgIndex = Math.round(Math.abs(i - 12 * this.state.frequency))
+						let imgIndex = Math.round(Math.abs(i - 12 * this.props.frequency))
 						if (imgIndex >= frqBarImgs.length) {
 							imgIndex = frqBarImgs.length - 1
 						}
@@ -73,7 +74,7 @@ class FrequencyTuner extends Component {
 				}
 				<FrameArea
 					color={colors.interactive}
-					x={clamp(Math.round(this.state.frequency * INPUT_WIDTH - HANDLE_WIDTH / 2 - 1), FRAME_BORDER_WIDTH, HANDLE_X_MAX)}
+					x={clamp(Math.round(this.props.frequency * INPUT_WIDTH - HANDLE_WIDTH / 2 - 1), FRAME_BORDER_WIDTH, HANDLE_X_MAX)}
 					y={1}
 					width={HANDLE_WIDTH}
 					height={8}
@@ -111,7 +112,7 @@ class FrequencyTuner extends Component {
 				<SignalIndicator
 					x={43}
 					y={0}
-					signal={this.state.frequency /* TODO: change this to actual signal */}
+					signal={this.props.frequency}
 					width={4}
 					height={10}
 					orientation={SignalIndicator.VERTICAL}
@@ -121,4 +122,10 @@ class FrequencyTuner extends Component {
 	}
 }
 
-export default FrequencyTuner
+function mapStateToProps(state) {
+	return {
+		frequency: state.mast_frequency,
+	}
+}
+
+export default connect(mapStateToProps)(FrequencyTuner)

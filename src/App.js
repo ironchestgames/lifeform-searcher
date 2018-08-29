@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 import { Stage, Container } from 'react-pixi-fiber'
 import Loading from './Loading'
 import Game from './Game'
@@ -11,6 +13,25 @@ import {
 } from './vars'
 
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST
+
+const initalState = {
+  mast_frequency: 0.5,
+}
+
+const reducer = function (state = initalState, action) {
+  switch (action.type) {
+    case 'SET_MAST_FREQUENCY':
+      return {
+        ...state,
+        mast_frequency: action.value,
+      }
+
+    default:
+      return state
+  }
+}
+
+const gameModel = createStore(reducer)
 
 class App extends Component {
   state = {
@@ -33,7 +54,9 @@ class App extends Component {
         options={{ backgroundColor: colors.bg }}>
         <Container scale={zoomScale}>
           { this.state.isLoadingDone ?
-            <Game /> :
+            <Provider store={gameModel}>
+              <Game />
+            </Provider> :
             <Loading onComplete={this.onLoadingComplete.bind(this)} />
           }
         </Container>
