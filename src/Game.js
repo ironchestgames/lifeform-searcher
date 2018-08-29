@@ -7,6 +7,7 @@ import FrequencyTuner from './FrequencyTuner'
 import MastAimer from './MastAimer'
 import MastValueDisplay from './MastValueDisplay'
 import MastButtonPanel from './MastButtonPanel'
+import MastVideoDisplay from './MastVideoDisplay'
 import { colors } from './vars'
 
 class Game extends Component {
@@ -33,6 +34,7 @@ class Game extends Component {
 				<FrequencyTuner x={3} y={60} />
 				<MastValueDisplay x={3} y={72} frequency={0.5} mastAngle={Math.PI} receptionProcent={0} />
 				<MastButtonPanel x={63} y={23} />
+				<MastVideoDisplay x={3} y={12} />
 			</Container>
 		)
 	}
