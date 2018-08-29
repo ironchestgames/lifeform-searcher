@@ -38,7 +38,7 @@ class MastValueDisplay extends Component {
 					x={46}
 					y={7}
 					anchor={[1, 0]}
-					text={frqAndDegNumberFormatter(this.props.mastAngle * 180 / Math.PI)}
+					text={frqAndDegNumberFormatter((Math.abs(this.props.mastAngle * 180 / Math.PI - 90) % 360) - 180)}
 					style={{font: fontOptions}}
 					align={'right'}
 					tint={colors.active}
