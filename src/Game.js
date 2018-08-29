@@ -8,6 +8,7 @@ import MastAimer from './MastAimer'
 import MastValueDisplay from './MastValueDisplay'
 import MastButtonPanel from './MastButtonPanel'
 import MastVideoDisplay from './MastVideoDisplay'
+import GameValueDisplay from './GameValueDisplay'
 import { colors } from './vars'
 
 class Game extends Component {
@@ -30,11 +31,12 @@ class Game extends Component {
 					x={52}
 					y={60}
 					speed={0.005}
-					isOn={true} />
+					/>
 				<FrequencyTuner x={3} y={60} />
 				<MastValueDisplay x={3} y={72} frequency={0.5} mastAngle={Math.PI} receptionProcent={0} />
 				<MastButtonPanel x={63} y={23} />
 				<MastVideoDisplay x={3} y={12} />
+				<GameValueDisplay x={154} y={15} elapsedTime={1000000} />
 			</Container>
 		)
 	}

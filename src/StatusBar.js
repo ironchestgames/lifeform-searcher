@@ -33,7 +33,7 @@ class StatusBar extends Component {
 					texture={this.state.isOn ? PIXI.Texture.fromImage(imgOn) : PIXI.Texture.fromImage(imgOff)}
 					/>
 				<BitmapText
-					x={8}
+					x={7}
 					y={1}
 					text={this.state.isOn ? 'ON' : 'OFF'}
 					style={{font: { size: 16, name: 'ironchestcapital' }}}
@@ -43,7 +43,7 @@ class StatusBar extends Component {
 					x={this.props.width - 2}
 					y={1}
 					anchor={{x: 1, y: 0}}
-					text={this.props.statusText}
+					text={this.props.statusText || ''}
 					style={{font: { size: 16, name: 'ironchestcapital' }}}
 					align={'right'}
 					tint={this.state.isOn ? colors.active : colors.frames}
