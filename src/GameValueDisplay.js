@@ -26,14 +26,14 @@ class GameValueDisplay extends Component {
 				<StatusBar x={3} y={3} width={32} />
 
 				<BitmapText
-					x={2}
+					x={3}
 					y={12}
 					text={'lifefrms'}
 					style={{font: fontOptions}}
 					tint={colors.frames}
 					/>
 				<BitmapText
-					x={2}
+					x={3}
 					y={19}
 					text={'found'}
 					style={{font: fontOptions}}
@@ -41,7 +41,7 @@ class GameValueDisplay extends Component {
 					/>
 
 				<BitmapText
-					x={34}
+					x={35}
 					y={19}
 					anchor={[1, 0]}
 					text={this.props.lifeformsFoundCounter + ''}
@@ -52,14 +52,14 @@ class GameValueDisplay extends Component {
 					/>
 
 				<BitmapText
-					x={2}
+					x={3}
 					y={28}
 					text={'dur'}
 					style={{font: fontOptions}}
 					tint={colors.frames}
 					/>
 				<BitmapText
-					x={16}
+					x={17}
 					y={28}
 					text={msToTimeFormatter(this.props.elapsedTime)}
 					style={{font: fontOptions}}
