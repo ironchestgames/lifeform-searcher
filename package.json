@@ -1,6 +1,6 @@
 {
   "name": "lifeform-searcher",
-  "version": "1.0.0-0",
+  "version": "1.0.0-1",
   "private": true,
   "homepage": "https://ironchestgames.github.io/lifeform-searcher",
   "dependencies": {
