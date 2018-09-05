@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { format } from 'd3-format'
 import { Container, BitmapText } from 'react-pixi-fiber'
-import { colors, fontOptions } from './vars'
+import { colors, fontStyle } from './vars'
 
 const frqAndDegNumberFormatter = format('.3f')
 const recNumberFormatter = format('.1f')
@@ -14,7 +14,7 @@ class MastValueDisplay extends Component {
 					x={0}
 					y={0}
 					text={'FRQ'}
-					style={{font: fontOptions}}
+					style={fontStyle}
 					tint={colors.frames}
 					/>
 				<BitmapText
@@ -22,7 +22,7 @@ class MastValueDisplay extends Component {
 					y={0}
 					anchor={[1, 0]}
 					text={frqAndDegNumberFormatter(this.props.frequencyNumber)}
-					style={{font: fontOptions}}
+					style={fontStyle}
 					align={'right'}
 					tint={colors.active}
 					/>
@@ -31,7 +31,7 @@ class MastValueDisplay extends Component {
 					x={0}
 					y={7}
 					text={'DEG'}
-					style={{font: fontOptions}}
+					style={fontStyle}
 					tint={colors.frames}
 					/>
 				<BitmapText
@@ -39,7 +39,7 @@ class MastValueDisplay extends Component {
 					y={7}
 					anchor={[1, 0]}
 					text={frqAndDegNumberFormatter((Math.abs(this.props.mastAngle * 180 / Math.PI - 90) % 360) - 180)}
-					style={{font: fontOptions}}
+					style={fontStyle}
 					align={'right'}
 					tint={colors.active}
 					/>
@@ -48,7 +48,7 @@ class MastValueDisplay extends Component {
 					x={0}
 					y={14}
 					text={'REC                         %'}
-					style={{font: fontOptions}}
+					style={fontStyle}
 					tint={colors.frames}
 					/>
 				<BitmapText
@@ -56,7 +56,7 @@ class MastValueDisplay extends Component {
 					y={14}
 					anchor={[1, 0]}
 					text={recNumberFormatter(this.props.receptionProcent * 100)}
-					style={{font: fontOptions}}
+					style={fontStyle}
 					align={'right'}
 					tint={colors.active}
 					/>

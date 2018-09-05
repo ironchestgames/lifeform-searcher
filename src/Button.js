@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Sprite, BitmapText } from 'react-pixi-fiber'
 import * as PIXI from 'pixi.js'
-import { colors, fontOptions } from './vars'
+import { colors, fontStyle } from './vars'
 
 const ENABLED = 'ENABLED'
 const DISABLED = 'DISABLED'
@@ -53,7 +53,7 @@ class Button extends Component {
 					x={this.props.textOffset[0] - 1}
 					y={this.props.textOffset[1]}
 					text={this.props.text}
-					style={{font: fontOptions}}
+					style={fontStyle}
 					tint={activeColors[this.props.state].text}
 					/>
 

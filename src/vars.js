@@ -9,7 +9,7 @@ const colors = {
 	page_bg: 0x141226, // NOTE: only used on html page
 }
 
-const fontOptions = { size: 16, name: 'ironchestcapital' }
+const fontStyle = { font: { size: 16, name: 'ironchestcapital' } }
 
 const zoomScale = 4
 const gameWidth = 192
@@ -17,7 +17,7 @@ const gameHeight = 128
 
 export {
 	colors,
-	fontOptions,
+	fontStyle,
 	zoomScale,
 	gameWidth,
 	gameHeight,

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Container, BitmapText } from 'react-pixi-fiber'
 import FrameArea from './FrameArea'
 import StatusBar from './StatusBar'
-import { colors, fontOptions } from './vars'
+import { colors, fontStyle } from './vars'
 
 function msToTimeFormatter(ms) {
 	var pad = (n, z = 2) => ('00' + n).slice(-z)
@@ -29,14 +29,14 @@ class GameValueDisplay extends Component {
 					x={3}
 					y={12}
 					text={'lifefrms'}
-					style={{font: fontOptions}}
+					style={fontStyle}
 					tint={colors.frames}
 					/>
 				<BitmapText
 					x={3}
 					y={19}
 					text={'found'}
-					style={{font: fontOptions}}
+					style={fontStyle}
 					tint={colors.frames}
 					/>
 
@@ -45,7 +45,7 @@ class GameValueDisplay extends Component {
 					y={19}
 					anchor={[1, 0]}
 					text={this.props.lifeformsFoundCounter + ''}
-					style={{font: fontOptions}}
+					style={fontStyle}
 					align={'right'}
 					tint={colors.active}
 					visible={this.state.isOn}
@@ -55,14 +55,14 @@ class GameValueDisplay extends Component {
 					x={3}
 					y={28}
 					text={'dur'}
-					style={{font: fontOptions}}
+					style={fontStyle}
 					tint={colors.frames}
 					/>
 				<BitmapText
 					x={17}
 					y={28}
 					text={msToTimeFormatter(this.props.elapsedTime)}
-					style={{font: fontOptions}}
+					style={fontStyle}
 					tint={colors.active}
 					visible={this.state.isOn}
 					/>
