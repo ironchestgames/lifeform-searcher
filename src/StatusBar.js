@@ -13,24 +13,33 @@ class StatusBar extends Component {
 		isOn: false,
 	}
 
+	constructor(props) {
+		super(props)
+		this.toggleOn = this.toggleOn.bind(this)
+		this.textureOn = PIXI.Texture.fromImage(imgOn)
+		this.textureOff = PIXI.Texture.fromImage(imgOff)
+	}
+
+	toggleOn() {
+		this.setState((prevState) => ({
+			isOn: !prevState.isOn,
+		}))
+	}
+
 	render() {
 		return (
 			<Container
 				x={this.props.x}
 				y={this.props.y}
 				interactive={true}
-				pointertap={() => {
-					this.setState((prevState) => ({
-						isOn: !prevState.isOn,
-					}))
-				}}>
+				pointertap={this.toggleOn}>
 				<FrameArea
 					color={this.state.isOn ? colors.frames : colors.bg}
 					height={7}
 					width={this.props.width}
 					/>
 				<Sprite
-					texture={this.state.isOn ? PIXI.Texture.fromImage(imgOn) : PIXI.Texture.fromImage(imgOff)}
+					texture={this.state.isOn ? this.textureOn : this.textureOff}
 					/>
 				<BitmapText
 					x={7}
