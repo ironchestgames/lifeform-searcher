@@ -16,7 +16,7 @@ import arrowRightImg from './assets/images/mastaimer_arrowright_on.png'
 import arrowRightInteractiveImg from './assets/images/mastaimer_arrowright_interactive.png'
 import arrowLeftInteractiveImg from './assets/images/mastaimer_arrowleft_interactive.png'
 
-const aimingAngleFilter = new PIXI.Filter(null, `
+const aimingAngleFilters = [new PIXI.Filter(null, `
 	varying vec2 vTextureCoord;
 	uniform sampler2D uSampler;
 
@@ -38,9 +38,9 @@ const aimingAngleFilter = new PIXI.Filter(null, `
 		}
 		gl_FragColor = pixel;
 	}
-`)
+`)]
 
-const aimRangeFilter = new PIXI.Filter(null, `
+const aimRangeFilters = [new PIXI.Filter(null, `
 	varying vec2 vTextureCoord;
 	uniform sampler2D uSampler;
 
@@ -62,7 +62,7 @@ const aimRangeFilter = new PIXI.Filter(null, `
 		}
 		gl_FragColor = pixel;
 	}
-`)
+`)]
 
 const aimRangeGraphics = new PIXI.Graphics()
 const aimingAngleGraphics = new PIXI.Graphics()
@@ -78,7 +78,23 @@ class MastAimer extends Component {
 		mastSpeed: 0.008,
 	}
 
-	componentDidMount() {
+	constructor(props) {
+		super(props)
+		this.startDragging = this.startDragging.bind(this)
+		this.onDragging = this.onDragging.bind(this)
+		this.stopDragging = this.stopDragging.bind(this)
+
+		this.textureBg = PIXI.Texture.from(bgImg)
+		this.textureLeftArrow = PIXI.Texture.from(arrowLeftImg)
+		this.textureInteractiveLeftArrow = PIXI.Texture.from(arrowLeftInteractiveImg)
+		this.textureRightArrow = PIXI.Texture.from(arrowRightImg)
+		this.textureInteractiveRightArrow = PIXI.Texture.from(arrowRightInteractiveImg)
+
+		this.textureIndicatorActive = PIXI.Texture.from(indicatorActiveImg)
+		this.textureIndicatorInteractive = PIXI.Texture.from(indicatorInteractiveImg)
+	}
+
+	componentWillMount() {
 		this.context.app.ticker.add(function (dt) {
 			if (this.props.isSpinning && !this.state.isDragging) {
 				this.setState({
@@ -89,6 +105,29 @@ class MastAimer extends Component {
 			}
 			this.updateCurrentAngle(dt)
 		}, this)
+	}
+
+	startDragging(event) {
+		this.setState({
+			isDragging: true,
+		})
+		this.setAimingAngle(this.getAimingAngle(
+				event.data.getLocalPosition(event.target).x,
+				event.data.getLocalPosition(event.target).y))
+	}
+
+	onDragging(event) {
+		if (this.state.isDragging) {
+			this.setAimingAngle(this.getAimingAngle(
+					event.data.getLocalPosition(event.target).x,
+					event.data.getLocalPosition(event.target).y))
+		}
+	}
+
+	stopDragging() {
+		this.setState({
+			isDragging: false,
+		})
 	}
 
 	setAimingAngle(angle) {
@@ -170,62 +209,62 @@ class MastAimer extends Component {
 					texture={aimRangeTexture}
 					x={-2}
 					y={-2}
-					filters={[aimRangeFilter]}
+					filters={aimRangeFilters}
 					/>
 				<Sprite
 					texture={aimingAngleTexture}
 					x={-2}
 					y={-2}
-					filters={[aimingAngleFilter]}
+					filters={aimingAngleFilters}
 					/>
 
 				<Sprite
 					x={-16}
 					y={-16}
-					texture={PIXI.Texture.from(bgImg)}
+					texture={this.textureBg}
 					/>
 
 				<Sprite
-					texture={PIXI.Texture.from(arrowLeftImg)}
+					texture={this.textureLeftArrow}
 					x={0}
 					y={0}
 					visible={(this.props.isSpinning && !this.state.isGoingRight) ||
 						 this.state.isChangingMastAngle && !this.state.isDragging && !this.state.isGoingRight}
 					/>
 				<Sprite
-					texture={PIXI.Texture.from(arrowLeftInteractiveImg)}
+					texture={this.textureInteractiveLeftArrow}
 					x={0}
 					y={0}
 					visible={this.props.isSpinning && !this.state.isGoingRight && this.state.isDragging}
 					/>
 
 				<Sprite
-					texture={PIXI.Texture.from(arrowRightImg)}
+					texture={this.textureRightArrow}
 					x={23}
 					y={0}
 					visible={(this.props.isSpinning && this.state.isGoingRight) ||
 						 this.state.isChangingMastAngle && !this.state.isDragging && this.state.isGoingRight}
 					/>
 				<Sprite
-					texture={PIXI.Texture.from(arrowRightInteractiveImg)}
+					texture={this.textureInteractiveRightArrow}
 					x={23}
 					y={0}
 					visible={this.props.isSpinning && this.state.isGoingRight && this.state.isDragging}
 					/>
 				<Sprite
-					texture={PIXI.Texture.from(indicatorActiveImg)}
+					texture={this.textureIndicatorActive}
 					x={0}
 					y={27}
 					visible={this.props.isOn}
 					/>
 				<Sprite
-					texture={PIXI.Texture.from(indicatorActiveImg)}
+					texture={this.textureIndicatorActive}
 					x={27}
 					y={27}
 					visible={this.props.isSpinning || this.state.isChangingMastAngle && !this.state.isDragging}
 					/>
 				<Sprite
-					texture={PIXI.Texture.from(indicatorInteractiveImg)}
+					texture={this.textureIndicatorInteractive}
 					x={27}
 					y={27}
 					visible={this.state.isDragging}
@@ -238,31 +277,10 @@ class MastAimer extends Component {
 					width={32}
 					height={32}
 					interactive={true}
-					pointerdown={(event) => {
-						this.setState({
-							isDragging: true,
-						})
-						this.setAimingAngle(this.getAimingAngle(
-								event.data.getLocalPosition(event.target).x,
-								event.data.getLocalPosition(event.target).y))
-					}}
-					pointerout={() => {
-						this.setState({
-							isDragging: false,
-						})
-					}}
-					pointerup={() => {
-						this.setState({
-							isDragging: false,
-						})
-					}}
-					pointermove={(event) => {
-						if (this.state.isDragging) {
-							this.setAimingAngle(this.getAimingAngle(
-									event.data.getLocalPosition(event.target).x,
-									event.data.getLocalPosition(event.target).y))
-						}
-					}}
+					pointerdown={this.startDragging}
+					pointerout={this.stopDragging}
+					pointerup={this.stopDragging}
+					pointermove={this.onDragging}
 					/>
 
 			</Container>
