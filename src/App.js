@@ -7,7 +7,6 @@ import Game from './Game'
 import * as PIXI from 'pixi.js'
 import {
   colors,
-  zoomScale,
   gameWidth,
   gameHeight
 } from './vars'
@@ -30,10 +29,10 @@ class App extends Component {
   render() {
     return (
       <Stage
-        width={gameWidth * zoomScale}
-        height={gameHeight * zoomScale}
+        width={gameWidth}
+        height={gameHeight}
         options={{ backgroundColor: colors.bg }}>
-        <Container scale={zoomScale}>
+        <Container>
           { this.state.isLoadingDone ?
             <Provider store={store}>
               <Game />

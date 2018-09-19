@@ -11,14 +11,12 @@ const colors = {
 
 const fontStyle = { font: { size: 16, name: 'ironchestcapital' } }
 
-const zoomScale = 4
 const gameWidth = 192
 const gameHeight = 128
 
 export {
 	colors,
 	fontStyle,
-	zoomScale,
 	gameWidth,
 	gameHeight,
 }

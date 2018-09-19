@@ -4,7 +4,6 @@ import { Container, Sprite } from 'react-pixi-fiber'
 import { CRTFilter } from 'pixi-filters'
 import * as PIXI from 'pixi.js'
 import Button from './Button'
-import { zoomScale } from './vars'
 
 import videoFrameImg from './assets/images/video_display_frame.png'
 
@@ -16,7 +15,7 @@ const crtFilter = new CRTFilter({
 	lineWidth: 0,
 	lineContrast: 0,
 	noise: 1,
-	noiseSize: zoomScale,
+	noiseSize: 1,
 	vignetting: 0.33,
 	vignettingAlpha: 0.7,
 	vignettingBlur: 0.3,
