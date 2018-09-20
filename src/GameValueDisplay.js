@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Container, BitmapText } from 'react-pixi-fiber'
 import FrameArea from './FrameArea'
 import StatusBar from './StatusBar'
-import { setGameValueDisplayStatusAction } from './Actions'
+import { toggleGameValueDisplayAction } from './Actions'
 import { colors, gameConstants, fontStyle } from './vars'
 
 function msToTimeFormatter(ms) {
@@ -19,11 +19,7 @@ class GameValueDisplay extends Component {
 	}
 
 	toggleStatus() {
-		if (this.props.gameValueDisplayStatus === gameConstants.STATUS_OFF) {
-			setGameValueDisplayStatusAction(gameConstants.STATUS_RUNNING)
-		} else if (this.props.gameValueDisplayStatus === gameConstants.STATUS_RUNNING) {
-			setGameValueDisplayStatusAction(gameConstants.STATUS_OFF)
-		}
+		toggleGameValueDisplayAction()
 	}
 
 	render() {
@@ -43,47 +39,51 @@ class GameValueDisplay extends Component {
 					onTap={this.toggleStatus}
 					/>
 
-				<BitmapText
-					x={3}
-					y={12}
-					text={'lifefrms'}
-					style={fontStyle}
-					tint={colors.frames}
-					/>
-				<BitmapText
-					x={3}
-					y={19}
-					text={'found'}
-					style={fontStyle}
-					tint={colors.frames}
-					/>
+				{this.props.gameValueDisplayStatus !== gameConstants.STATUS_OFF ?
+					<Container>
+						<BitmapText
+							x={3}
+							y={12}
+							text={'lifefrms'}
+							style={fontStyle}
+							tint={colors.frames}
+							/>
+						<BitmapText
+							x={3}
+							y={19}
+							text={'found'}
+							style={fontStyle}
+							tint={colors.frames}
+							/>
 
-				<BitmapText
-					x={35}
-					y={19}
-					anchor={[1, 0]}
-					text={this.props.lifeformsFoundCounter + ''}
-					style={fontStyle}
-					align={'right'}
-					tint={colors.active}
-					visible={this.props.gameValueDisplayStatus === gameConstants.STATUS_RUNNING}
-					/>
+						<BitmapText
+							x={35}
+							y={19}
+							anchor={[1, 0]}
+							text={this.props.lifeformsFoundCounter + ''}
+							style={fontStyle}
+							align={'right'}
+							tint={colors.active}
+							visible={this.props.gameValueDisplayStatus === gameConstants.STATUS_RUNNING}
+							/>
 
-				<BitmapText
-					x={3}
-					y={28}
-					text={'dur'}
-					style={fontStyle}
-					tint={colors.frames}
-					/>
-				<BitmapText
-					x={17}
-					y={28}
-					text={msToTimeFormatter(this.props.elapsedGameTime)}
-					style={fontStyle}
-					tint={colors.active}
-					visible={this.props.gameValueDisplayStatus === gameConstants.STATUS_RUNNING}
-					/>
+						<BitmapText
+							x={3}
+							y={28}
+							text={'dur'}
+							style={fontStyle}
+							tint={colors.frames}
+							/>
+						<BitmapText
+							x={17}
+							y={28}
+							text={msToTimeFormatter(this.props.elapsedGameTime)}
+							style={fontStyle}
+							tint={colors.active}
+							visible={this.props.gameValueDisplayStatus === gameConstants.STATUS_RUNNING}
+							/>
+						</Container>
+					: null }
 			</Container>
 		)
 	}

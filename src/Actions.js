@@ -6,6 +6,9 @@ export const INC_LIFEFORMS_FOUND = 'INC_LIFEFORMS_FOUND'
 // duration actions
 export const ADD_ELAPSED_TIME = 'ADD_ELAPSED_TIME'
 
+// tick/update actions
+export const TICK = 'TICK'
+
 // Mast actions
 export const SET_MAST_STATUS = 'SET_MAST_STATUS'
 export const SET_MAST_FREQUENCY = 'SET_MAST_FREQUENCY'
@@ -15,6 +18,7 @@ export const DEC_MAST_SPEED = 'DEC_MAST_SPEED'
 export const TOGGLE_MAST_SPINNING = 'TOGGLE_MAST_SPINNING'
 
 // GameValueDisplay actions
+export const TOGGLE_GAME_VALUE_DISPLAY = 'TOGGLE_GAME_VALUE_DISPLAY'
 export const SET_GAME_VALUE_DISPLAY_STATUS = 'SET_GAME_VALUE_DISPLAY_STATUS'
 
 
@@ -31,6 +35,16 @@ export const addElapsedTimeAction = function (dt) { // NOTE: dt is in ms
 		type: ADD_ELAPSED_TIME,
 		payload: {
 			dt: dt,
+		}
+	})
+}
+
+// tick/update action creator
+export const tickAction = function (dt) {
+	dispatch({
+		type: TICK,
+		payload: {
+			value: dt,
 		}
 	})
 }
@@ -83,6 +97,12 @@ export const toggleMastIsSpinningAction = function () {
 
 
 // GameValueDisplay action creators
+export const toggleGameValueDisplayAction = function () {
+	dispatch({
+		type: TOGGLE_GAME_VALUE_DISPLAY,
+	})
+}
+
 export const setGameValueDisplayStatusAction = function (newStatus) {
 	dispatch({
 		type: SET_GAME_VALUE_DISPLAY_STATUS,

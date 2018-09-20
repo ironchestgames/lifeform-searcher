@@ -20,6 +20,7 @@ const initalState = {
 
 	// GameValueDisplay
 	gameValueDisplayStatus: gameConstants.STATUS_OFF,
+	gameValueDisplayInitTimer: 0,
 }
 
 const reducer = function (state, action) {
@@ -35,6 +36,20 @@ const reducer = function (state, action) {
 			return {
 				...state,
 				elapsedGameTime: state.elapsedGameTime + action.payload.dt,
+			}
+
+		case actions.TICK:
+			{
+				let newStatus = state.gameValueDisplayStatus
+				if (state.gameValueDisplayStatus === gameConstants.STATUS_INIT &&
+						state.gameValueDisplayInitTimer <= 0) {
+					newStatus = gameConstants.STATUS_RUNNING
+				}
+				return {
+					...state,
+					gameValueDisplayStatus: newStatus,
+					gameValueDisplayInitTimer: Math.max(state.gameValueDisplayInitTimer - action.payload.value, 0),
+				}
 			}
 
 		// Mast
@@ -82,6 +97,19 @@ const reducer = function (state, action) {
 			}
 
 		// GameValueDisplay
+		case actions.TOGGLE_GAME_VALUE_DISPLAY:
+			let newStatus = gameConstants.STATUS_OFF
+			let gameValueDisplayInitTimer = 0
+			if (state.gameValueDisplayStatus === gameConstants.STATUS_OFF) {
+				newStatus = gameConstants.STATUS_INIT
+				gameValueDisplayInitTimer = 1000
+			}
+			return {
+				...state,
+				gameValueDisplayStatus: newStatus,
+				gameValueDisplayInitTimer: gameValueDisplayInitTimer,
+			}
+
 		case actions.SET_GAME_VALUE_DISPLAY_STATUS:
 			return {
 				...state,

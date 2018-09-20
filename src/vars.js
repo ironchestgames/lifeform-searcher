@@ -17,6 +17,7 @@ const gameHeight = 128
 const gameConstants = {
 	STATUS_OFF: 'STATUS_OFF',
 	STATUS_RUNNING: 'STATUS_RUNNING',
+	STATUS_INIT: 'STATUS_INIT',
 }
 
 export {
