@@ -14,9 +14,17 @@ const fontStyle = { font: { size: 16, name: 'ironchestcapital' } }
 const gameWidth = 192
 const gameHeight = 128
 
+const gameConstants = {
+	STATUS_OFF: 'STATUS_OFF',
+	STATUS_INITIALIZING: 'STATUS_INITIALIZING',
+	STATUS_RUNNING: 'STATUS_RUNNING',
+	STATUS_ERROR: 'STATUS_ERROR',
+}
+
 export {
 	colors,
 	fontStyle,
 	gameWidth,
 	gameHeight,
+	gameConstants,
 }

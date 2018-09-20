@@ -10,10 +10,15 @@ import MastValueDisplay from './MastValueDisplay'
 import MastButtonPanel from './MastButtonPanel'
 import MastVideoDisplay from './MastVideoDisplay'
 import GameValueDisplay from './GameValueDisplay'
-import { addElapsedTimeAction } from './Actions'
-import { colors } from './vars'
+import { addElapsedTimeAction, setMastStatus } from './Actions'
+import { colors, gameConstants } from './vars'
 
 class Game extends Component {
+
+	constructor(props) {
+		super(props)
+		this.toggleMastStatus = this.toggleMastStatus.bind(this)
+	}
 
 	componentDidMount() {
 		this.context.app.renderer.plugins.interaction.moveWhenInside = true
@@ -21,6 +26,14 @@ class Game extends Component {
 		this.context.app.ticker.add(() => {
 			addElapsedTimeAction(this.context.app.ticker.elapsedMS)
 		})
+	}
+
+	toggleMastStatus() {
+		if (this.props.mastStatus === gameConstants.STATUS_OFF) {
+			setMastStatus(gameConstants.STATUS_RUNNING)
+		} else if (this.props.mastStatus === gameConstants.STATUS_RUNNING) {
+			setMastStatus(gameConstants.STATUS_OFF)
+		}
 	}
 
 	render() {
@@ -32,7 +45,13 @@ class Game extends Component {
 					width={86}
 					height={94}
 					/>
-				<StatusBar x={3} y={3} width={80} statusText={'RUNNING'} />
+				<StatusBar
+					x={3}
+					y={3}
+					width={80}
+					status={this.props.mastStatus}
+					onTap={this.toggleMastStatus}
+					/>
 				<MastAimer
 					x={52}
 					y={60}
@@ -71,6 +90,7 @@ Game.contextTypes = {
 
 function mapStateToProps(state) {
 	return {
+		mastStatus: state.mastStatus,
 		mastFrequencyNumber: state.mastFrequencyNumber,
 		mastAngle: state.mastAngle,
 		mastSpeedFactor: state.mastSpeedFactor,

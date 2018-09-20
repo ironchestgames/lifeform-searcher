@@ -1,6 +1,7 @@
 import { dispatch } from './GameModel'
 
 // mast actions
+export const SET_MAST_STATUS = 'SET_MAST_STATUS'
 export const SET_MAST_FREQUENCY = 'SET_MAST_FREQUENCY'
 export const SET_MAST_ANGLE = 'SET_MAST_ANGLE'
 export const INC_MAST_SPEED = 'INC_MAST_SPEED'
@@ -15,6 +16,15 @@ export const ADD_ELAPSED_TIME = 'ADD_ELAPSED_TIME'
 
 
 // mast action creators
+export const setMastStatus = function (newStatus) {
+	dispatch({
+		type: SET_MAST_STATUS,
+		payload: {
+			value: newStatus,
+		},
+	})
+}
+
 export const setMastFrequencyAction = function (frequency) { // NOTE: a value between 0.0 - 1.0
 	dispatch({
 		type: SET_MAST_FREQUENCY,

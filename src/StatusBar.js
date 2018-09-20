@@ -3,10 +3,27 @@ import PropTypes from 'prop-types'
 import * as PIXI from 'pixi.js'
 import { Sprite, Container, BitmapText } from 'react-pixi-fiber'
 import FrameArea from './FrameArea'
-import { colors } from './vars'
+import { colors, gameConstants } from './vars'
 
 import imgOn from './assets/images/onbutton_on.png'
 import imgOff from './assets/images/onbutton_off.png'
+
+const getStatusText = function (status) {
+	switch (status) {
+		case gameConstants.STATUS_OFF:
+			return ''
+
+		case gameConstants.STATUS_INITIALIZING:
+			return 'INIT'
+
+		case gameConstants.STATUS_RUNNING:
+			return 'RUNNING'
+
+		case gameConstants.STATUS_ERROR:
+			return 'ERROR'
+	}
+	return ''
+}
 
 class StatusBar extends Component {
 	state = {
@@ -15,15 +32,8 @@ class StatusBar extends Component {
 
 	constructor(props) {
 		super(props)
-		this.toggleOn = this.toggleOn.bind(this)
 		this.textureOn = PIXI.Texture.fromImage(imgOn)
 		this.textureOff = PIXI.Texture.fromImage(imgOff)
-	}
-
-	toggleOn() {
-		this.setState((prevState) => ({
-			isOn: !prevState.isOn,
-		}))
 	}
 
 	render() {
@@ -32,31 +42,30 @@ class StatusBar extends Component {
 				x={this.props.x}
 				y={this.props.y}
 				interactive={true}
-				pointertap={this.toggleOn}>
+				pointertap={this.props.onTap}>
 				<FrameArea
-					color={this.state.isOn ? colors.frames : colors.bg}
+					color={this.props.status === gameConstants.STATUS_OFF ? colors.bg : colors.frames}
 					height={7}
 					width={this.props.width}
 					/>
 				<Sprite
-					texture={this.state.isOn ? this.textureOn : this.textureOff}
+					texture={this.props.status === gameConstants.STATUS_OFF ? this.textureOff : this.textureOn}
 					/>
 				<BitmapText
 					x={7}
 					y={1}
-					text={this.state.isOn ? 'ON' : 'OFF'}
+					text={this.props.status === gameConstants.STATUS_OFF ? 'OFF' : 'ON'}
 					style={{font: { size: 16, name: 'ironchestcapital' }}}
-					tint={this.state.isOn ? colors.active : colors.frames}
+					tint={this.props.status === gameConstants.STATUS_OFF ? colors.frames : colors.active}
 					/>
 				<BitmapText
 					x={this.props.width - 2}
 					y={1}
 					anchor={{x: 1, y: 0}}
-					text={this.props.statusText || ''}
+					text={getStatusText(this.props.status)}
 					style={{font: { size: 16, name: 'ironchestcapital' }}}
 					align={'right'}
-					tint={this.state.isOn ? colors.active : colors.frames}
-					visible={this.state.isOn}
+					tint={this.props.status === gameConstants.STATUS_OFF ? colors.frames : colors.active}
 					/>
 
 			</Container>

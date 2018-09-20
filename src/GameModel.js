@@ -1,10 +1,12 @@
 import { createStore } from 'redux'
 import * as actions from './Actions'
 import clamp from 'clamp'
+import { gameConstants } from './vars'
 
 const mastSpeedFactorStep = 0.25
 
 const initalState = {
+	mastStatus: gameConstants.STATUS_OFF,
 	mastFrequency: 0.5,
 	mastFrequencyNumber: 4000, 
 	mastAngle: 0,
@@ -17,6 +19,12 @@ const initalState = {
 
 const reducer = function (state, action) {
 	switch (action.type) {
+		case actions.SET_MAST_STATUS:
+			return {
+				...state,
+				mastStatus: action.payload.value,
+			}
+
 		case actions.SET_MAST_FREQUENCY:
 			const clampedValue = clamp(action.payload.value, 0, 1)
 			return {
