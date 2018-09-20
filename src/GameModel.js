@@ -6,6 +6,11 @@ import { gameConstants } from './vars'
 const mastSpeedFactorStep = 0.25
 
 const initalState = {
+
+	lifeformsFoundCounter: 0,
+	elapsedGameTime: 0, // ms
+
+	// Mast
 	mastStatus: gameConstants.STATUS_OFF,
 	mastFrequency: 0.5,
 	mastFrequencyNumber: 4000, 
@@ -13,15 +18,34 @@ const initalState = {
 	mastSpeedFactor: mastSpeedFactorStep,
 	mastIsSpinning: false,
 
-	lifeformsFoundCounter: 0,
-	elapsedGameTime: 0, // ms
+	// GameValueDisplay
+	gameValueDisplayStatus: gameConstants.STATUS_OFF,
 }
 
 const reducer = function (state, action) {
 	switch (action.type) {
-		case actions.SET_MAST_STATUS:
+
+		case actions.INC_LIFEFORMS_FOUND:
 			return {
 				...state,
+				lifeformsFoundCounter: state.lifeformsFoundCounter + 1,
+			}
+
+		case actions.ADD_ELAPSED_TIME:
+			return {
+				...state,
+				elapsedGameTime: state.elapsedGameTime + action.payload.dt,
+			}
+
+		// Mast
+		case actions.SET_MAST_STATUS:
+			const mastStatusTextMap = {
+				[gameConstants.STATUS_OFF]: '',
+				[gameConstants.STATUS_RUNNING]: 'RUNNING',
+			}
+			return {
+				...state,
+				mastStatusText: mastStatusTextMap[action.payload.value],
 				mastStatus: action.payload.value,
 			}
 
@@ -57,16 +81,11 @@ const reducer = function (state, action) {
 				mastIsSpinning: !state.mastIsSpinning,
 			}
 
-		case actions.INC_LIFEFORMS_FOUND:
+		// GameValueDisplay
+		case actions.SET_GAME_VALUE_DISPLAY_STATUS:
 			return {
 				...state,
-				lifeformsFoundCounter: state.lifeformsFoundCounter + 1,
-			}
-
-		case actions.ADD_ELAPSED_TIME:
-			return {
-				...state,
-				elapsedGameTime: state.elapsedGameTime + action.payload.dt,
+				gameValueDisplayStatus: action.payload.value,
 			}
 
 		default:

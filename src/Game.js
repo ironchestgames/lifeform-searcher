@@ -12,6 +12,7 @@ class Game extends Component {
 	componentDidMount() {
 		this.context.app.renderer.plugins.interaction.moveWhenInside = true
 
+		// game update
 		this.context.app.ticker.add(() => {
 			addElapsedTimeAction(this.context.app.ticker.elapsedMS)
 		})

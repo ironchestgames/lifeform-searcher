@@ -40,6 +40,7 @@ class Mast extends Component {
 					y={3}
 					width={80}
 					status={this.props.mastStatus}
+					statusText={this.props.mastStatusText}
 					onTap={this.toggleStatus}
 					/>
 				<MastAimer
@@ -71,6 +72,7 @@ class Mast extends Component {
 function mapStateToProps(state) {
 	return {
 		mastStatus: state.mastStatus,
+		mastStatusText: state.mastStatusText,
 		mastFrequencyNumber: state.mastFrequencyNumber,
 		mastAngle: state.mastAngle,
 		mastSpeedFactor: state.mastSpeedFactor,

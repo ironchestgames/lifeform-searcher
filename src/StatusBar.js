@@ -8,27 +8,7 @@ import { colors, gameConstants } from './vars'
 import imgOn from './assets/images/onbutton_on.png'
 import imgOff from './assets/images/onbutton_off.png'
 
-const getStatusText = function (status) {
-	switch (status) {
-		case gameConstants.STATUS_OFF:
-			return ''
-
-		case gameConstants.STATUS_INITIALIZING:
-			return 'INIT'
-
-		case gameConstants.STATUS_RUNNING:
-			return 'RUNNING'
-
-		case gameConstants.STATUS_ERROR:
-			return 'ERROR'
-	}
-	return ''
-}
-
 class StatusBar extends Component {
-	state = {
-		isOn: false,
-	}
 
 	constructor(props) {
 		super(props)
@@ -62,7 +42,7 @@ class StatusBar extends Component {
 					x={this.props.width - 2}
 					y={1}
 					anchor={{x: 1, y: 0}}
-					text={getStatusText(this.props.status)}
+					text={this.props.statusText || ''}
 					style={{font: { size: 16, name: 'ironchestcapital' }}}
 					align={'right'}
 					tint={this.props.status === gameConstants.STATUS_OFF ? colors.frames : colors.active}

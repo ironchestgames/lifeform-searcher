@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { Container, BitmapText } from 'react-pixi-fiber'
 import FrameArea from './FrameArea'
 import StatusBar from './StatusBar'
-import { colors, fontStyle } from './vars'
+import { setGameValueDisplayStatus } from './Actions'
+import { colors, gameConstants, fontStyle } from './vars'
 
 function msToTimeFormatter(ms) {
 	var pad = (n, z = 2) => ('00' + n).slice(-z)
@@ -11,8 +12,18 @@ function msToTimeFormatter(ms) {
 }
 
 class GameValueDisplay extends Component {
-	state = {
-		isOn: true,
+
+	constructor(props) {
+		super(props)
+		this.toggleStatus = this.toggleStatus.bind(this)
+	}
+
+	toggleStatus() {
+		if (this.props.gameValueDisplayStatus === gameConstants.STATUS_OFF) {
+			setGameValueDisplayStatus(gameConstants.STATUS_RUNNING)
+		} else if (this.props.gameValueDisplayStatus === gameConstants.STATUS_RUNNING) {
+			setGameValueDisplayStatus(gameConstants.STATUS_OFF)
+		}
 	}
 
 	render() {
@@ -24,7 +35,13 @@ class GameValueDisplay extends Component {
 					width={38}
 					height={37}
 					/>
-				<StatusBar x={3} y={3} width={32} />
+				<StatusBar
+					x={3}
+					y={3}
+					width={32}
+					status={this.props.gameValueDisplayStatus}
+					onTap={this.toggleStatus}
+					/>
 
 				<BitmapText
 					x={3}
@@ -49,7 +66,7 @@ class GameValueDisplay extends Component {
 					style={fontStyle}
 					align={'right'}
 					tint={colors.active}
-					visible={this.state.isOn}
+					visible={this.props.gameValueDisplayStatus === gameConstants.STATUS_RUNNING}
 					/>
 
 				<BitmapText
@@ -65,7 +82,7 @@ class GameValueDisplay extends Component {
 					text={msToTimeFormatter(this.props.elapsedGameTime)}
 					style={fontStyle}
 					tint={colors.active}
-					visible={this.state.isOn}
+					visible={this.props.gameValueDisplayStatus === gameConstants.STATUS_RUNNING}
 					/>
 			</Container>
 		)
@@ -76,6 +93,8 @@ function mapStateToProps(state) {
 	return {
 		lifeformsFoundCounter: state.lifeformsFoundCounter,
 		elapsedGameTime: state.elapsedGameTime,
+
+		gameValueDisplayStatus: state.gameValueDisplayStatus,
 	}
 }
 

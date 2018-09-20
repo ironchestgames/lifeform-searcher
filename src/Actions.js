@@ -1,6 +1,12 @@
 import { dispatch } from './GameModel'
 
-// mast actions
+// score actions
+export const INC_LIFEFORMS_FOUND = 'INC_LIFEFORMS_FOUND'
+
+// duration actions
+export const ADD_ELAPSED_TIME = 'ADD_ELAPSED_TIME'
+
+// Mast actions
 export const SET_MAST_STATUS = 'SET_MAST_STATUS'
 export const SET_MAST_FREQUENCY = 'SET_MAST_FREQUENCY'
 export const SET_MAST_ANGLE = 'SET_MAST_ANGLE'
@@ -8,12 +14,26 @@ export const INC_MAST_SPEED = 'INC_MAST_SPEED'
 export const DEC_MAST_SPEED = 'DEC_MAST_SPEED'
 export const TOGGLE_MAST_SPINNING = 'TOGGLE_MAST_SPINNING'
 
-// score actions
-export const INC_LIFEFORMS_FOUND = 'INC_LIFEFORMS_FOUND'
+// GameValueDisplay actions
+export const SET_GAME_VALUE_DISPLAY_STATUS = 'SET_GAME_VALUE_DISPLAY_STATUS'
 
-// duration actions
-export const ADD_ELAPSED_TIME = 'ADD_ELAPSED_TIME'
 
+// score action creators
+export const incLifeformsFoundAction = function () {
+	dispatch({
+		type: INC_LIFEFORMS_FOUND,
+	})
+}
+
+// duration action creators
+export const addElapsedTimeAction = function (dt) { // NOTE: dt is in ms
+	dispatch({
+		type: ADD_ELAPSED_TIME,
+		payload: {
+			dt: dt,
+		}
+	})
+}
 
 // mast action creators
 export const setMastStatus = function (newStatus) {
@@ -61,19 +81,13 @@ export const toggleMastIsSpinningAction = function () {
 	})
 }
 
-// score action creators
-export const incLifeformsFoundAction = function () {
-	dispatch({
-		type: INC_LIFEFORMS_FOUND,
-	})
-}
 
-// duration action creators
-export const addElapsedTimeAction = function (dt) { // NOTE: dt is in ms
+// GameValueDisplay action creators
+export const setGameValueDisplayStatus = function (newStatus) {
 	dispatch({
-		type: ADD_ELAPSED_TIME,
+		type: SET_GAME_VALUE_DISPLAY_STATUS,
 		payload: {
-			dt: dt,
-		}
+			value: newStatus,
+		},
 	})
 }
