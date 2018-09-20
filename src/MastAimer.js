@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import * as PIXI from 'pixi.js'
 import { Sprite, Container } from 'react-pixi-fiber'
@@ -21,7 +22,6 @@ import aimRangeImg from './assets/images/mastaimer_range.png'
 class MastAimer extends Component {
 	state = {
 		isDragging: false,
-		mastAngle: 0,
 		aimingAngle: 0,
 		breadth: Math.PI / 3,
 		isGoingRight: false,
@@ -52,7 +52,7 @@ class MastAimer extends Component {
 		this.context.app.ticker.add(function (dt) {
 			if (this.props.isSpinning && !this.state.isDragging) {
 				this.setState({
-					aimingAngle: this.state.mastAngle + this.state.mastSpeed * this.props.speedFactor * (
+					aimingAngle: this.props.mastAngle + this.state.mastSpeed * this.props.speedFactor * (
 							this.state.isGoingRight ? 1.1 : -1.1),
 					isChangingMastAngle: true,
 				})
@@ -99,12 +99,12 @@ class MastAimer extends Component {
 	}
 
 	updateCurrentAngle(dt) {
-		const d = this.state.aimingAngle - this.state.mastAngle
+		const d = this.state.aimingAngle - this.props.mastAngle
 		const angleDiff = Math.atan2(Math.sin(d), Math.cos(d))
-		let newAngle = this.state.mastAngle + this.state.mastSpeed * this.props.speedFactor
+		let newAngle = this.props.mastAngle + this.state.mastSpeed * this.props.speedFactor
 		let isGoingRight = true
 		if (angleDiff < 0) {
-			newAngle = this.state.mastAngle - this.state.mastSpeed * this.props.speedFactor
+			newAngle = this.props.mastAngle - this.state.mastSpeed * this.props.speedFactor
 			isGoingRight = false
 		}
 		this.setState({
@@ -136,7 +136,7 @@ class MastAimer extends Component {
 					anchor={[0.5, 0.5]}
 					x={15.5}
 					y={16}
-					rotation={this.state.mastAngle}
+					rotation={this.props.mastAngle}
 					/>
 				<Sprite
 					texture={this.textureAimingAngle}
@@ -220,4 +220,10 @@ MastAimer.contextTypes = {
 	app: PropTypes.object,
 }
 
-export default MastAimer
+function mapStateToProps(state) {
+	return {
+		mastAngle: state.mastAngle,
+	}
+}
+
+export default connect(mapStateToProps)(MastAimer)
