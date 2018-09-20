@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Container, BitmapText } from 'react-pixi-fiber'
 import FrameArea from './FrameArea'
 import StatusBar from './StatusBar'
@@ -61,7 +62,7 @@ class GameValueDisplay extends Component {
 				<BitmapText
 					x={17}
 					y={28}
-					text={msToTimeFormatter(this.props.elapsedTime)}
+					text={msToTimeFormatter(this.props.elapsedGameTime)}
 					style={fontStyle}
 					tint={colors.active}
 					visible={this.state.isOn}
@@ -71,4 +72,11 @@ class GameValueDisplay extends Component {
 	}
 }
 
-export default GameValueDisplay
+function mapStateToProps(state) {
+	return {
+		lifeformsFoundCounter: state.lifeformsFoundCounter,
+		elapsedGameTime: state.elapsedGameTime,
+	}
+}
+
+export default connect(mapStateToProps)(GameValueDisplay)

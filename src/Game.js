@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Container } from 'react-pixi-fiber'
 import FrameArea from './FrameArea'
@@ -22,12 +21,7 @@ class Game extends Component {
 		return (
 			<Container>
 				<Mast x={0} y={0} />
-				<GameValueDisplay
-					x={154}
-					y={15}
-					elapsedTime={this.props.elapsedGameTime}
-					lifeformsFoundCounter={this.props.lifeformsFoundCounter}
-					/>
+				<GameValueDisplay x={154} y={15} />
 			</Container>
 		)
 	}
@@ -37,11 +31,4 @@ Game.contextTypes = {
 	app: PropTypes.object,
 }
 
-function mapStateToProps(state) {
-	return {
-		lifeformsFoundCounter: state.lifeformsFoundCounter,
-		elapsedGameTime: state.elapsedGameTime,
-	}
-}
-
-export default connect(mapStateToProps)(Game)
+export default Game
