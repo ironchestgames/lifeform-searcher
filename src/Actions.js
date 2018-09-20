@@ -36,7 +36,7 @@ export const addElapsedTimeAction = function (dt) { // NOTE: dt is in ms
 }
 
 // mast action creators
-export const setMastStatus = function (newStatus) {
+export const setMastStatusAction = function (newStatus) {
 	dispatch({
 		type: SET_MAST_STATUS,
 		payload: {
@@ -83,7 +83,7 @@ export const toggleMastIsSpinningAction = function () {
 
 
 // GameValueDisplay action creators
-export const setGameValueDisplayStatus = function (newStatus) {
+export const setGameValueDisplayStatusAction = function (newStatus) {
 	dispatch({
 		type: SET_GAME_VALUE_DISPLAY_STATUS,
 		payload: {

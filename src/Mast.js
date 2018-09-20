@@ -8,7 +8,7 @@ import MastAimer from './MastAimer'
 import MastValueDisplay from './MastValueDisplay'
 import MastButtonPanel from './MastButtonPanel'
 import MastVideoDisplay from './MastVideoDisplay'
-import { setMastStatus } from './Actions'
+import { setMastStatusAction } from './Actions'
 import { colors, gameConstants } from './vars'
 
 class Mast extends Component {
@@ -20,9 +20,9 @@ class Mast extends Component {
 
 	toggleStatus() {
 		if (this.props.mastStatus === gameConstants.STATUS_OFF) {
-			setMastStatus(gameConstants.STATUS_RUNNING)
+			setMastStatusAction(gameConstants.STATUS_RUNNING)
 		} else if (this.props.mastStatus === gameConstants.STATUS_RUNNING) {
-			setMastStatus(gameConstants.STATUS_OFF)
+			setMastStatusAction(gameConstants.STATUS_OFF)
 		}
 	}
 

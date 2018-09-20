@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Container, BitmapText } from 'react-pixi-fiber'
 import FrameArea from './FrameArea'
 import StatusBar from './StatusBar'
-import { setGameValueDisplayStatus } from './Actions'
+import { setGameValueDisplayStatusAction } from './Actions'
 import { colors, gameConstants, fontStyle } from './vars'
 
 function msToTimeFormatter(ms) {
@@ -20,9 +20,9 @@ class GameValueDisplay extends Component {
 
 	toggleStatus() {
 		if (this.props.gameValueDisplayStatus === gameConstants.STATUS_OFF) {
-			setGameValueDisplayStatus(gameConstants.STATUS_RUNNING)
+			setGameValueDisplayStatusAction(gameConstants.STATUS_RUNNING)
 		} else if (this.props.gameValueDisplayStatus === gameConstants.STATUS_RUNNING) {
-			setGameValueDisplayStatus(gameConstants.STATUS_OFF)
+			setGameValueDisplayStatusAction(gameConstants.STATUS_OFF)
 		}
 	}
 
